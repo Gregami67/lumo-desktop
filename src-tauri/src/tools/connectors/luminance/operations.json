@@ -1,0 +1,5594 @@
+{
+  "api_version": "1.5",
+  "operations": [
+    {
+      "name": "get_system_data",
+      "title": "Get system data",
+      "description": "GET /api2/",
+      "method": "GET",
+      "path": "/api2/",
+      "tag": "System",
+      "params": [],
+      "bulk": false,
+      "body": null,
+      "response": "json"
+    },
+    {
+      "name": "list_users",
+      "title": "List users",
+      "description": "Only Service Users with Administrator permissions can access this list.\n\nGET /api2/users",
+      "method": "GET",
+      "path": "/api2/users",
+      "tag": "Users",
+      "params": [
+        {
+          "name": "id",
+          "in": "query",
+          "required": false,
+          "description": "Unique user ID",
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "username",
+          "in": "query",
+          "required": false,
+          "description": "Username (login)",
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "name",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "email",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "account_id",
+          "in": "query",
+          "required": false,
+          "description": "Associated account ID",
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "state",
+          "in": "query",
+          "required": false,
+          "description": "User state (e.g. active)",
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "multi_factor_auth_enabled",
+          "in": "query",
+          "required": false,
+          "description": "If true, MFA is enabled for this user",
+          "schema": {
+            "type": "boolean"
+          }
+        },
+        {
+          "name": "limit",
+          "in": "query",
+          "required": false,
+          "description": "Maximum number of objects to return",
+          "schema": {
+            "type": "integer",
+            "minimum": 1
+          }
+        },
+        {
+          "name": "offset",
+          "in": "query",
+          "required": false,
+          "description": "Number of objects to skip (pagination)",
+          "schema": {
+            "type": "integer",
+            "minimum": 0
+          }
+        }
+      ],
+      "bulk": false,
+      "body": null,
+      "response": "json"
+    },
+    {
+      "name": "get_user_by_id",
+      "title": "Get user by id",
+      "description": "GET /api2/users/{id}",
+      "method": "GET",
+      "path": "/api2/users/{id}",
+      "tag": "Users",
+      "params": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "bulk": false,
+      "body": null,
+      "response": "json"
+    },
+    {
+      "name": "get_current_user_user_associated_with_authentication_token",
+      "title": "Get current user (the user associated with the authentication token)",
+      "description": "GET /api2/users/me",
+      "method": "GET",
+      "path": "/api2/users/me",
+      "tag": "Users",
+      "params": [],
+      "bulk": false,
+      "body": null,
+      "response": "json"
+    },
+    {
+      "name": "list_project_users",
+      "title": "List project users",
+      "description": "GET /api2/project_users",
+      "method": "GET",
+      "path": "/api2/project_users",
+      "tag": "Project Users",
+      "params": [
+        {
+          "name": "id",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "project_id",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "user_id",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "type",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "roles",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            ]
+          }
+        }
+      ],
+      "bulk": false,
+      "body": null,
+      "response": "json"
+    },
+    {
+      "name": "get_project_user_by_id",
+      "title": "Get project user by id",
+      "description": "GET /api2/project_users/{id}",
+      "method": "GET",
+      "path": "/api2/project_users/{id}",
+      "tag": "Project Users",
+      "params": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "bulk": false,
+      "body": null,
+      "response": "json"
+    },
+    {
+      "name": "list_annotation_types",
+      "title": "List annotation types",
+      "description": "GET /api2/annotation_types",
+      "method": "GET",
+      "path": "/api2/annotation_types",
+      "tag": "Annotation Types",
+      "params": [
+        {
+          "name": "id",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "type",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "key",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "name",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "pre_built",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "boolean"
+          }
+        },
+        {
+          "name": "options",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "object"
+          }
+        }
+      ],
+      "bulk": false,
+      "body": null,
+      "response": "json"
+    },
+    {
+      "name": "get_annotation_type_by_id",
+      "title": "Get annotation type by id",
+      "description": "GET /api2/annotation_types/{id}",
+      "method": "GET",
+      "path": "/api2/annotation_types/{id}",
+      "tag": "Annotation Types",
+      "params": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "bulk": false,
+      "body": null,
+      "response": "json"
+    },
+    {
+      "name": "list_annotation_sources",
+      "title": "List annotation sources",
+      "description": "GET /api2/annotation_sources",
+      "method": "GET",
+      "path": "/api2/annotation_sources",
+      "tag": "Annotation Sources",
+      "params": [
+        {
+          "name": "id",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "annotation_type_id",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "room_id",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "workflow_id",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "annotation_source_relation_id",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "state",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "bulk": false,
+      "body": null,
+      "response": "json"
+    },
+    {
+      "name": "create_annotation_source",
+      "title": "Create annotation source",
+      "description": "POST /api2/annotation_sources",
+      "method": "POST",
+      "path": "/api2/annotation_sources",
+      "tag": "Annotation Sources",
+      "params": [],
+      "bulk": false,
+      "body": {
+        "kind": "json",
+        "required": true,
+        "schema": {
+          "type": "object",
+          "properties": {
+            "annotation_type_id": {
+              "type": "integer"
+            },
+            "room_id": {
+              "type": "integer"
+            },
+            "workflow_id": {
+              "type": "integer"
+            },
+            "annotation_source_relation_id": {
+              "type": "integer"
+            },
+            "content": {
+              "type": "object"
+            }
+          }
+        }
+      },
+      "response": "json"
+    },
+    {
+      "name": "update_annotation_sources_by_filter",
+      "title": "Update annotation sources by filter",
+      "description": "PATCH /api2/annotation_sources",
+      "method": "PATCH",
+      "path": "/api2/annotation_sources",
+      "tag": "Annotation Sources",
+      "params": [
+        {
+          "name": "id",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "annotation_type_id",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "room_id",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "workflow_id",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "annotation_source_relation_id",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "state",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "bulk": true,
+      "body": {
+        "kind": "json",
+        "required": true,
+        "schema": {
+          "type": "object",
+          "properties": {
+            "annotation_type_id": {
+              "type": "integer"
+            },
+            "room_id": {
+              "type": "integer"
+            },
+            "workflow_id": {
+              "type": "integer"
+            },
+            "annotation_source_relation_id": {
+              "type": "integer"
+            },
+            "content": {
+              "type": "object"
+            },
+            "state": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "response": "json"
+    },
+    {
+      "name": "get_annotation_source",
+      "title": "Get annotation source",
+      "description": "GET /api2/annotation_sources/{id}",
+      "method": "GET",
+      "path": "/api2/annotation_sources/{id}",
+      "tag": "Annotation Sources",
+      "params": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "bulk": false,
+      "body": null,
+      "response": "json"
+    },
+    {
+      "name": "update_annotation_source",
+      "title": "Update annotation source",
+      "description": "PATCH /api2/annotation_sources/{id}",
+      "method": "PATCH",
+      "path": "/api2/annotation_sources/{id}",
+      "tag": "Annotation Sources",
+      "params": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "bulk": false,
+      "body": {
+        "kind": "json",
+        "required": true,
+        "schema": {
+          "type": "object",
+          "properties": {
+            "annotation_type_id": {
+              "type": "integer"
+            },
+            "room_id": {
+              "type": "integer"
+            },
+            "workflow_id": {
+              "type": "integer"
+            },
+            "annotation_source_relation_id": {
+              "type": "integer"
+            },
+            "content": {
+              "type": "object"
+            },
+            "state": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "response": "json"
+    },
+    {
+      "name": "list_annotation_source_relations",
+      "title": "List annotation source relations",
+      "description": "GET /api2/annotation_source_relations",
+      "method": "GET",
+      "path": "/api2/annotation_source_relations",
+      "tag": "Annotation Source Relations",
+      "params": [
+        {
+          "name": "id",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "name",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "bulk": false,
+      "body": null,
+      "response": "json"
+    },
+    {
+      "name": "create_annotation_source_relation",
+      "title": "Create annotation source relation",
+      "description": "POST /api2/annotation_source_relations",
+      "method": "POST",
+      "path": "/api2/annotation_source_relations",
+      "tag": "Annotation Source Relations",
+      "params": [],
+      "bulk": false,
+      "body": {
+        "kind": "json",
+        "required": true,
+        "schema": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "response": "json"
+    },
+    {
+      "name": "get_annotation_source_relation",
+      "title": "Get annotation source relation",
+      "description": "GET /api2/annotation_source_relations/{id}",
+      "method": "GET",
+      "path": "/api2/annotation_source_relations/{id}",
+      "tag": "Annotation Source Relations",
+      "params": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "bulk": false,
+      "body": null,
+      "response": "json"
+    },
+    {
+      "name": "update_annotation_source_relation",
+      "title": "Update annotation source relation",
+      "description": "PATCH /api2/annotation_source_relations/{id}",
+      "method": "PATCH",
+      "path": "/api2/annotation_source_relations/{id}",
+      "tag": "Annotation Source Relations",
+      "params": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "bulk": false,
+      "body": {
+        "kind": "json",
+        "required": true,
+        "schema": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "response": "json"
+    },
+    {
+      "name": "aggregated_search",
+      "title": "Aggregated search",
+      "description": "GET /api2/search",
+      "method": "GET",
+      "path": "/api2/search",
+      "tag": "Search",
+      "params": [
+        {
+          "name": "groupBy",
+          "in": "query",
+          "required": true,
+          "description": "One of `documents` or `matters`",
+          "schema": {
+            "type": "string",
+            "enum": [
+              "documents",
+              "matters",
+              "groups"
+            ]
+          }
+        }
+      ],
+      "bulk": false,
+      "body": null,
+      "response": "json"
+    },
+    {
+      "name": "search_documents",
+      "title": "Search documents",
+      "description": "GET /api2/search/documents",
+      "method": "GET",
+      "path": "/api2/search/documents",
+      "tag": "Search",
+      "params": [],
+      "bulk": false,
+      "body": null,
+      "response": "json"
+    },
+    {
+      "name": "search_matters",
+      "title": "Search matters",
+      "description": "GET /api2/search/matters",
+      "method": "GET",
+      "path": "/api2/search/matters",
+      "tag": "Search",
+      "params": [],
+      "bulk": false,
+      "body": null,
+      "response": "json"
+    },
+    {
+      "name": "list_projects_authenticated_user_can_access",
+      "title": "List projects the authenticated user can access",
+      "description": "GET /api2/projects",
+      "method": "GET",
+      "path": "/api2/projects",
+      "tag": "Projects",
+      "params": [
+        {
+          "name": "id",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "moniker",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "name",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "account_id",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "state",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "permissions",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "type",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "limit",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "integer",
+            "minimum": 1
+          }
+        },
+        {
+          "name": "offset",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "integer",
+            "minimum": 0
+          }
+        }
+      ],
+      "bulk": false,
+      "body": null,
+      "response": "json"
+    },
+    {
+      "name": "get_project_by_id",
+      "title": "Get project by id",
+      "description": "GET /api2/projects/{project_id}",
+      "method": "GET",
+      "path": "/api2/projects/{project_id}",
+      "tag": "Projects",
+      "params": [
+        {
+          "name": "project_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "bulk": false,
+      "body": null,
+      "response": "json"
+    },
+    {
+      "name": "list_folders",
+      "title": "List folders",
+      "description": "GET /api2/projects/{project_id}/folders",
+      "method": "GET",
+      "path": "/api2/projects/{project_id}/folders",
+      "tag": "Folders",
+      "params": [
+        {
+          "name": "project_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "id",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "parent_id",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "name",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "state",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "type",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "bulk": false,
+      "body": null,
+      "response": "json"
+    },
+    {
+      "name": "create_folder",
+      "title": "Create folder",
+      "description": "POST /api2/projects/{project_id}/folders",
+      "method": "POST",
+      "path": "/api2/projects/{project_id}/folders",
+      "tag": "Folders",
+      "params": [
+        {
+          "name": "project_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "bulk": false,
+      "body": {
+        "kind": "json",
+        "required": true,
+        "schema": {
+          "type": "object",
+          "properties": {
+            "parent_id": {
+              "type": "integer",
+              "nullable": true
+            },
+            "name": {
+              "type": "string"
+            },
+            "type": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "response": "json"
+    },
+    {
+      "name": "update_folders_by_filter",
+      "title": "Update folders by filter",
+      "description": "PATCH /api2/projects/{project_id}/folders",
+      "method": "PATCH",
+      "path": "/api2/projects/{project_id}/folders",
+      "tag": "Folders",
+      "params": [
+        {
+          "name": "project_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "id",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "parent_id",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "name",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "state",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "type",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "bulk": true,
+      "body": {
+        "kind": "json",
+        "required": true,
+        "schema": {
+          "type": "object",
+          "properties": {
+            "state": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "response": "json"
+    },
+    {
+      "name": "delete_folders_by_filter",
+      "title": "Delete folders by filter",
+      "description": "DELETE /api2/projects/{project_id}/folders",
+      "method": "DELETE",
+      "path": "/api2/projects/{project_id}/folders",
+      "tag": "Folders",
+      "params": [
+        {
+          "name": "project_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "id",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "parent_id",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "name",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "state",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "type",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "bulk": true,
+      "body": null,
+      "response": "json"
+    },
+    {
+      "name": "get_folder",
+      "title": "Get folder",
+      "description": "GET /api2/projects/{project_id}/folders/{folder_id}",
+      "method": "GET",
+      "path": "/api2/projects/{project_id}/folders/{folder_id}",
+      "tag": "Folders",
+      "params": [
+        {
+          "name": "project_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "folder_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "bulk": false,
+      "body": null,
+      "response": "json"
+    },
+    {
+      "name": "update_folder",
+      "title": "Update folder",
+      "description": "PATCH /api2/projects/{project_id}/folders/{folder_id}",
+      "method": "PATCH",
+      "path": "/api2/projects/{project_id}/folders/{folder_id}",
+      "tag": "Folders",
+      "params": [
+        {
+          "name": "project_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "folder_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "bulk": false,
+      "body": {
+        "kind": "json",
+        "required": true,
+        "schema": {
+          "type": "object",
+          "properties": {
+            "state": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "response": "json"
+    },
+    {
+      "name": "delete_folder",
+      "title": "Delete folder",
+      "description": "DELETE /api2/projects/{project_id}/folders/{folder_id}",
+      "method": "DELETE",
+      "path": "/api2/projects/{project_id}/folders/{folder_id}",
+      "tag": "Folders",
+      "params": [
+        {
+          "name": "project_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "folder_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "bulk": false,
+      "body": null,
+      "response": "json"
+    },
+    {
+      "name": "upload_document_into_folder",
+      "title": "Upload a document into a folder",
+      "description": "Body must be a base64-encoded file. See query params for metadata.\n\nPOST /api2/projects/{project_id}/folders/{folder_id}/upload",
+      "method": "POST",
+      "path": "/api2/projects/{project_id}/folders/{folder_id}/upload",
+      "tag": "Folders",
+      "params": [
+        {
+          "name": "project_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "folder_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "name",
+          "in": "query",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "replace",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "string",
+            "enum": [
+              "true",
+              "false"
+            ]
+          }
+        },
+        {
+          "name": "matter_version_type",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "string",
+            "enum": [
+              "attachment",
+              "version"
+            ]
+          }
+        },
+        {
+          "name": "matter_id",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "task_id",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "oneOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "integer"
+                }
+              }
+            ]
+          }
+        }
+      ],
+      "bulk": false,
+      "body": {
+        "kind": "binary",
+        "required": true
+      },
+      "response": "json"
+    },
+    {
+      "name": "list_documents_in_folder",
+      "title": "List documents in folder",
+      "description": "GET /api2/projects/{project_id}/folders/{folder_id}/documents",
+      "method": "GET",
+      "path": "/api2/projects/{project_id}/folders/{folder_id}/documents",
+      "tag": "Folders",
+      "params": [
+        {
+          "name": "project_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "folder_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "bulk": false,
+      "body": null,
+      "response": "json"
+    },
+    {
+      "name": "delete_documents_in_folder_by_filter",
+      "title": "Delete documents in folder by filter",
+      "description": "DELETE /api2/projects/{project_id}/folders/{folder_id}/documents",
+      "method": "DELETE",
+      "path": "/api2/projects/{project_id}/folders/{folder_id}/documents",
+      "tag": "Folders",
+      "params": [
+        {
+          "name": "project_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "folder_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "bulk": true,
+      "body": null,
+      "response": "json"
+    },
+    {
+      "name": "get_document_in_folder",
+      "title": "Get document in folder",
+      "description": "GET /api2/projects/{project_id}/folders/{folder_id}/documents/{document_id}",
+      "method": "GET",
+      "path": "/api2/projects/{project_id}/folders/{folder_id}/documents/{document_id}",
+      "tag": "Folders",
+      "params": [
+        {
+          "name": "project_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "folder_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "document_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "bulk": false,
+      "body": null,
+      "response": "json"
+    },
+    {
+      "name": "delete_document_in_folder",
+      "title": "Delete document in folder",
+      "description": "DELETE /api2/projects/{project_id}/folders/{folder_id}/documents/{document_id}",
+      "method": "DELETE",
+      "path": "/api2/projects/{project_id}/folders/{folder_id}/documents/{document_id}",
+      "tag": "Folders",
+      "params": [
+        {
+          "name": "project_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "folder_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "document_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "bulk": false,
+      "body": null,
+      "response": "json"
+    },
+    {
+      "name": "list_document_annotations_folder_scoped_path",
+      "title": "List document annotations (folder-scoped path)",
+      "description": "GET /api2/projects/{project_id}/folders/{folder_id}/documents/{document_id}/annotations",
+      "method": "GET",
+      "path": "/api2/projects/{project_id}/folders/{folder_id}/documents/{document_id}/annotations",
+      "tag": "Document Annotations",
+      "params": [
+        {
+          "name": "project_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "folder_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "document_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "id",
+          "in": "query",
+          "required": false,
+          "description": "Annotation ID",
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "created_at",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        {
+          "name": "created_by",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "document_id",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "type",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "roles",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        {
+          "name": "content",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "state",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "string",
+            "enum": [
+              "active",
+              "deleted"
+            ]
+          }
+        },
+        {
+          "name": "pre_built",
+          "in": "query",
+          "required": false,
+          "description": "Set to true to select pre-built annotations and to false to select custom annotations; omit to include both.",
+          "schema": {
+            "type": "boolean"
+          }
+        },
+        {
+          "name": "pretty",
+          "in": "query",
+          "required": false,
+          "description": "Set true to format time-period content for display.",
+          "schema": {
+            "type": "boolean"
+          }
+        }
+      ],
+      "bulk": false,
+      "body": null,
+      "response": "json"
+    },
+    {
+      "name": "create_document_annotations_folder_scoped_path",
+      "title": "Create document annotations (folder-scoped path)",
+      "description": "Create document wide annotations. Only 'generic' and 'entity' annotation types are supported and 'generic' type annotations are exclusive (limited to 1 instance) per document. To create an annotation, the matching annotation type must be active and enabled for the project.\n\nPOST /api2/projects/{project_id}/folders/{folder_id}/documents/{document_id}/annotations",
+      "method": "POST",
+      "path": "/api2/projects/{project_id}/folders/{folder_id}/documents/{document_id}/annotations",
+      "tag": "Document Annotations",
+      "params": [
+        {
+          "name": "project_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "folder_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "document_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "bulk": false,
+      "body": {
+        "kind": "json",
+        "required": true,
+        "schema": {
+          "oneOf": [
+            {
+              "type": "object",
+              "required": [
+                "type",
+                "content"
+              ],
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "pattern": "^(generic|entity):"
+                },
+                "roles": {
+                  "type": "array",
+                  "maxItems": 1,
+                  "items": {
+                    "type": "string"
+                  },
+                  "default": []
+                },
+                "content": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "description": "Type-specific annotation content, validated against the annotation type."
+                },
+                "state": {
+                  "type": "string",
+                  "enum": [
+                    "active",
+                    "deleted"
+                  ]
+                }
+              }
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "type",
+                  "content"
+                ],
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "pattern": "^(generic|entity):"
+                  },
+                  "roles": {
+                    "type": "array",
+                    "maxItems": 1,
+                    "items": {
+                      "type": "string"
+                    },
+                    "default": []
+                  },
+                  "content": {
+                    "type": "object",
+                    "additionalProperties": true,
+                    "description": "Type-specific annotation content, validated against the annotation type."
+                  },
+                  "state": {
+                    "type": "string",
+                    "enum": [
+                      "active",
+                      "deleted"
+                    ]
+                  }
+                }
+              }
+            }
+          ]
+        }
+      },
+      "response": "json"
+    },
+    {
+      "name": "update_document_annotations_by_filter_folder_scoped_path",
+      "title": "Update document annotations by filter (folder-scoped path)",
+      "description": "Replace the content field on matching annotations. At least one query parameter is required (excluding non-filtering parameters 'pretty', 'limit' and 'offset'). All matched annotations must have the same annotation type and the annotation type cannot be Pre-Built or configured as 'blacklisted for modification'. An empty match returns an empty array.\n\nPATCH /api2/projects/{project_id}/folders/{folder_id}/documents/{document_id}/annotations",
+      "method": "PATCH",
+      "path": "/api2/projects/{project_id}/folders/{folder_id}/documents/{document_id}/annotations",
+      "tag": "Document Annotations",
+      "params": [
+        {
+          "name": "project_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "folder_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "document_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "id",
+          "in": "query",
+          "required": false,
+          "description": "Annotation ID",
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "created_at",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        {
+          "name": "created_by",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "document_id",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "type",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "roles",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        {
+          "name": "content",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "state",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "string",
+            "enum": [
+              "active",
+              "deleted"
+            ]
+          }
+        },
+        {
+          "name": "pre_built",
+          "in": "query",
+          "required": false,
+          "description": "If true, this will filter to annotations with a a pre-built annotation type resulting in an error (422 status code) because instances of pre-built annotation types cannot be updated. Leave as false or undefined to filter to annotations with a custom (non pre-built) annotation type which can be updated.",
+          "schema": {
+            "type": "boolean"
+          }
+        },
+        {
+          "name": "pretty",
+          "in": "query",
+          "required": false,
+          "description": "Set true to format time-period content for display.",
+          "schema": {
+            "type": "boolean"
+          }
+        }
+      ],
+      "bulk": true,
+      "body": {
+        "kind": "json",
+        "required": true,
+        "schema": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "content"
+          ],
+          "properties": {
+            "content": {
+              "type": "object",
+              "additionalProperties": true,
+              "description": "Type-specific annotation content, all values are validated against the annotation type"
+            }
+          }
+        }
+      },
+      "response": "json"
+    },
+    {
+      "name": "delete_document_annotations_by_filter_folder_scoped_path",
+      "title": "Delete document annotations by filter (folder-scoped path)",
+      "description": "Delete matching document annotations. At least one query parameter is required (excluding non-filtering parameters 'pretty', 'limit' and 'offset'). Annotations with an annotation type that is Pre-Built or configured as 'blacklisted for modification' can not be deleted.\n\nDELETE /api2/projects/{project_id}/folders/{folder_id}/documents/{document_id}/annotations",
+      "method": "DELETE",
+      "path": "/api2/projects/{project_id}/folders/{folder_id}/documents/{document_id}/annotations",
+      "tag": "Document Annotations",
+      "params": [
+        {
+          "name": "project_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "folder_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "document_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "id",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "created_by",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "document_id",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "created_at",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        {
+          "name": "type",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "roles",
+          "in": "query",
+          "required": false,
+          "description": "Annotation role keys. Use repeated roles query parameters for an array.",
+          "schema": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        {
+          "name": "content",
+          "in": "query",
+          "required": false,
+          "description": "Annotation content filter.",
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "state",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "pre_built",
+          "in": "query",
+          "required": false,
+          "description": "If true, this will filter to annotations with a a pre-built annotation type resulting in an error (422 status code) because instances of pre-built annotation types cannot be deleted. Leave as false or undefined to filter to annotations with a custom (non pre-built) annotation type which can be deleted.",
+          "schema": {
+            "type": "boolean"
+          }
+        }
+      ],
+      "bulk": true,
+      "body": null,
+      "response": "json"
+    },
+    {
+      "name": "get_document_annotation_folder_scoped_path",
+      "title": "Get document annotation (folder-scoped path)",
+      "description": "GET /api2/projects/{project_id}/folders/{folder_id}/documents/{document_id}/annotations/{annotation_id}",
+      "method": "GET",
+      "path": "/api2/projects/{project_id}/folders/{folder_id}/documents/{document_id}/annotations/{annotation_id}",
+      "tag": "Document Annotations",
+      "params": [
+        {
+          "name": "project_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "folder_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "document_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "annotation_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "bulk": false,
+      "body": null,
+      "response": "json"
+    },
+    {
+      "name": "update_document_annotation_folder_scoped_path",
+      "title": "Update document annotation (folder-scoped path)",
+      "description": "Replace the content for one document annotation, only the content can be changed. Annotations that match an annotation type that is Pre-Built or configured as 'blacklisted for modification' cannot be updated.\n\nPATCH /api2/projects/{project_id}/folders/{folder_id}/documents/{document_id}/annotations/{annotation_id}",
+      "method": "PATCH",
+      "path": "/api2/projects/{project_id}/folders/{folder_id}/documents/{document_id}/annotations/{annotation_id}",
+      "tag": "Document Annotations",
+      "params": [
+        {
+          "name": "project_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "folder_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "document_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "annotation_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "bulk": false,
+      "body": {
+        "kind": "json",
+        "required": true,
+        "schema": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "content"
+          ],
+          "properties": {
+            "content": {
+              "type": "object",
+              "additionalProperties": true,
+              "description": "Type-specific annotation content, all values are validated against the annotation type"
+            }
+          }
+        }
+      },
+      "response": "json"
+    },
+    {
+      "name": "delete_document_annotation_folder_scoped_path",
+      "title": "Delete document annotation (folder-scoped path)",
+      "description": "Delete a document annotation. Annotations that match an annotation type that is Pre-Built or configured as 'blacklisted for modification' cannot be deleted.\n\nDELETE /api2/projects/{project_id}/folders/{folder_id}/documents/{document_id}/annotations/{annotation_id}",
+      "method": "DELETE",
+      "path": "/api2/projects/{project_id}/folders/{folder_id}/documents/{document_id}/annotations/{annotation_id}",
+      "tag": "Document Annotations",
+      "params": [
+        {
+          "name": "project_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "folder_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "document_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "annotation_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "bulk": false,
+      "body": null,
+      "response": "json"
+    },
+    {
+      "name": "retrieve_annotation_text_folder_scoped_path",
+      "title": "Retrieve annotation text (folder-scoped path)",
+      "description": "Return text at each annotation position and at its content.evidence_positions. Only id and fullParagraph query parameters are accepted.\n\nGET /api2/projects/{project_id}/folders/{folder_id}/documents/{document_id}/annotations/annotationText",
+      "method": "GET",
+      "path": "/api2/projects/{project_id}/folders/{folder_id}/documents/{document_id}/annotations/annotationText",
+      "tag": "Document Annotations",
+      "params": [
+        {
+          "name": "project_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "folder_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "document_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "id",
+          "in": "query",
+          "required": true,
+          "description": "Annotation IDs. Pass one id or repeat the query parameter, for example id=1&id=2. Duplicate IDs are ignored.",
+          "schema": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            }
+          }
+        },
+        {
+          "name": "fullParagraph",
+          "in": "query",
+          "required": false,
+          "description": "Set true to expand root annotation text to full paragraphs. Evidence text is not expanded.",
+          "schema": {
+            "type": "string",
+            "enum": [
+              "true",
+              "false"
+            ]
+          }
+        }
+      ],
+      "bulk": false,
+      "body": null,
+      "response": "json"
+    },
+    {
+      "name": "download_document_file_folder_scoped_path",
+      "title": "Download document file (folder-scoped path)",
+      "description": "GET /api2/projects/{project_id}/folders/{folder_id}/documents/{document_id}/download",
+      "method": "GET",
+      "path": "/api2/projects/{project_id}/folders/{folder_id}/documents/{document_id}/download",
+      "tag": "Folders",
+      "params": [
+        {
+          "name": "project_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "folder_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "document_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "enable_token_linking",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "string",
+            "enum": [
+              "true",
+              "false"
+            ]
+          }
+        }
+      ],
+      "bulk": false,
+      "body": null,
+      "response": "binary"
+    },
+    {
+      "name": "list_documents_in_project",
+      "title": "List documents in a project",
+      "description": "GET /api2/projects/{project_id}/documents",
+      "method": "GET",
+      "path": "/api2/projects/{project_id}/documents",
+      "tag": "Documents",
+      "params": [
+        {
+          "name": "project_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "id",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "folder_id",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "parent_id",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "name",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "media_type",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "state",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "version_group",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "version",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "version_state",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "bulk": false,
+      "body": null,
+      "response": "json"
+    },
+    {
+      "name": "delete_documents_by_filter",
+      "title": "Delete documents by filter",
+      "description": "DELETE /api2/projects/{project_id}/documents",
+      "method": "DELETE",
+      "path": "/api2/projects/{project_id}/documents",
+      "tag": "Documents",
+      "params": [
+        {
+          "name": "project_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "id",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "bulk": true,
+      "body": null,
+      "response": "json"
+    },
+    {
+      "name": "get_document",
+      "title": "Get document",
+      "description": "GET /api2/projects/{project_id}/documents/{document_id}",
+      "method": "GET",
+      "path": "/api2/projects/{project_id}/documents/{document_id}",
+      "tag": "Documents",
+      "params": [
+        {
+          "name": "project_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "document_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "bulk": false,
+      "body": null,
+      "response": "json"
+    },
+    {
+      "name": "delete_single_document",
+      "title": "Delete single document",
+      "description": "DELETE /api2/projects/{project_id}/documents/{document_id}",
+      "method": "DELETE",
+      "path": "/api2/projects/{project_id}/documents/{document_id}",
+      "tag": "Documents",
+      "params": [
+        {
+          "name": "project_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "document_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "bulk": false,
+      "body": null,
+      "response": "json"
+    },
+    {
+      "name": "download_document_data_file",
+      "title": "Download document data file",
+      "description": "GET /api2/projects/{project_id}/documents/{document_id}/download",
+      "method": "GET",
+      "path": "/api2/projects/{project_id}/documents/{document_id}/download",
+      "tag": "Documents",
+      "params": [
+        {
+          "name": "project_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "document_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "enable_token_linking",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "string",
+            "enum": [
+              "true",
+              "false"
+            ]
+          }
+        }
+      ],
+      "bulk": false,
+      "body": null,
+      "response": "binary"
+    },
+    {
+      "name": "start_traffic_light_analysis_for_document",
+      "title": "Start traffic light analysis for a document",
+      "description": "POST /api2/projects/{project_id}/documents/{document_id}/traffic_light_analysis",
+      "method": "POST",
+      "path": "/api2/projects/{project_id}/documents/{document_id}/traffic_light_analysis",
+      "tag": "Documents",
+      "params": [
+        {
+          "name": "project_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "document_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "bulk": false,
+      "body": {
+        "kind": "json",
+        "required": true,
+        "schema": {
+          "type": "object",
+          "properties": {
+            "task_id": {
+              "type": "integer"
+            }
+          },
+          "required": [
+            "task_id"
+          ]
+        }
+      },
+      "response": "json"
+    },
+    {
+      "name": "list_document_annotations",
+      "title": "List document annotations",
+      "description": "GET /api2/projects/{project_id}/documents/{document_id}/annotations",
+      "method": "GET",
+      "path": "/api2/projects/{project_id}/documents/{document_id}/annotations",
+      "tag": "Document Annotations",
+      "params": [
+        {
+          "name": "project_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "document_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "id",
+          "in": "query",
+          "required": false,
+          "description": "Annotation ID",
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "created_at",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        {
+          "name": "created_by",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "document_id",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "type",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "roles",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        {
+          "name": "content",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "state",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "string",
+            "enum": [
+              "active",
+              "deleted"
+            ]
+          }
+        },
+        {
+          "name": "pre_built",
+          "in": "query",
+          "required": false,
+          "description": "Set to true to select pre-built annotations and to false to select custom annotations; omit to include both.",
+          "schema": {
+            "type": "boolean"
+          }
+        },
+        {
+          "name": "pretty",
+          "in": "query",
+          "required": false,
+          "description": "Set true to format time-period content for display.",
+          "schema": {
+            "type": "boolean"
+          }
+        }
+      ],
+      "bulk": false,
+      "body": null,
+      "response": "json"
+    },
+    {
+      "name": "create_document_annotations",
+      "title": "Create document annotations",
+      "description": "Create document wide annotations. Only 'generic' and 'entity' annotation types are supported and 'generic' type annotations are exclusive (limited to 1 instance) per document. To create an annotation, the matching annotation type must be active and enabled for the project.\n\nPOST /api2/projects/{project_id}/documents/{document_id}/annotations",
+      "method": "POST",
+      "path": "/api2/projects/{project_id}/documents/{document_id}/annotations",
+      "tag": "Document Annotations",
+      "params": [
+        {
+          "name": "project_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "document_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "bulk": false,
+      "body": {
+        "kind": "json",
+        "required": true,
+        "schema": {
+          "oneOf": [
+            {
+              "type": "object",
+              "required": [
+                "type",
+                "content"
+              ],
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "pattern": "^(generic|entity):"
+                },
+                "roles": {
+                  "type": "array",
+                  "maxItems": 1,
+                  "items": {
+                    "type": "string"
+                  },
+                  "default": []
+                },
+                "content": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "description": "Type-specific annotation content, validated against the annotation type."
+                },
+                "state": {
+                  "type": "string",
+                  "enum": [
+                    "active",
+                    "deleted"
+                  ]
+                }
+              }
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "type",
+                  "content"
+                ],
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "pattern": "^(generic|entity):"
+                  },
+                  "roles": {
+                    "type": "array",
+                    "maxItems": 1,
+                    "items": {
+                      "type": "string"
+                    },
+                    "default": []
+                  },
+                  "content": {
+                    "type": "object",
+                    "additionalProperties": true,
+                    "description": "Type-specific annotation content, validated against the annotation type."
+                  },
+                  "state": {
+                    "type": "string",
+                    "enum": [
+                      "active",
+                      "deleted"
+                    ]
+                  }
+                }
+              }
+            }
+          ]
+        }
+      },
+      "response": "json"
+    },
+    {
+      "name": "update_document_annotations_by_filter",
+      "title": "Update document annotations by filter",
+      "description": "Replace the content field on matching annotations. At least one query parameter is required (excluding non-filtering parameters 'pretty', 'limit' and 'offset'). All matched annotations must have the same annotation type and the annotation type cannot be Pre-Built or configured as 'blacklisted for modification'. An empty match returns an empty array.\n\nPATCH /api2/projects/{project_id}/documents/{document_id}/annotations",
+      "method": "PATCH",
+      "path": "/api2/projects/{project_id}/documents/{document_id}/annotations",
+      "tag": "Document Annotations",
+      "params": [
+        {
+          "name": "project_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "document_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "id",
+          "in": "query",
+          "required": false,
+          "description": "Annotation ID",
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "created_at",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        {
+          "name": "created_by",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "document_id",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "type",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "roles",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        {
+          "name": "content",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "state",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "string",
+            "enum": [
+              "active",
+              "deleted"
+            ]
+          }
+        },
+        {
+          "name": "pre_built",
+          "in": "query",
+          "required": false,
+          "description": "If true, this will filter to annotations with a a pre-built annotation type resulting in an error (422 status code) because instances of pre-built annotation types cannot be updated. Leave as false or undefined to filter to annotations with a custom (non pre-built) annotation type which can be updated.",
+          "schema": {
+            "type": "boolean"
+          }
+        },
+        {
+          "name": "pretty",
+          "in": "query",
+          "required": false,
+          "description": "Set true to format time-period content for display.",
+          "schema": {
+            "type": "boolean"
+          }
+        }
+      ],
+      "bulk": true,
+      "body": {
+        "kind": "json",
+        "required": true,
+        "schema": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "content"
+          ],
+          "properties": {
+            "content": {
+              "type": "object",
+              "additionalProperties": true,
+              "description": "Type-specific annotation content, all values are validated against the annotation type"
+            }
+          }
+        }
+      },
+      "response": "json"
+    },
+    {
+      "name": "delete_document_annotations_by_filter",
+      "title": "Delete document annotations by filter",
+      "description": "Delete matching document annotations. At least one query parameter is required (excluding non-filtering parameters 'pretty', 'limit' and 'offset'). Annotations with an annotation type that is Pre-Built or configured as 'blacklisted for modification' can not be deleted.\n\nDELETE /api2/projects/{project_id}/documents/{document_id}/annotations",
+      "method": "DELETE",
+      "path": "/api2/projects/{project_id}/documents/{document_id}/annotations",
+      "tag": "Document Annotations",
+      "params": [
+        {
+          "name": "project_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "document_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "id",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "created_by",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "document_id",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "created_at",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        {
+          "name": "type",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "roles",
+          "in": "query",
+          "required": false,
+          "description": "Annotation role keys. Use repeated roles query parameters for an array.",
+          "schema": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        {
+          "name": "content",
+          "in": "query",
+          "required": false,
+          "description": "Annotation content filter.",
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "state",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "pre_built",
+          "in": "query",
+          "required": false,
+          "description": "If true, this will filter to annotations with a a pre-built annotation type resulting in an error (422 status code) because instances of pre-built annotation types cannot be deleted. Leave as false or undefined to filter to annotations with a custom (non pre-built) annotation type which can be deleted.",
+          "schema": {
+            "type": "boolean"
+          }
+        }
+      ],
+      "bulk": true,
+      "body": null,
+      "response": "json"
+    },
+    {
+      "name": "get_document_annotation",
+      "title": "Get document annotation",
+      "description": "GET /api2/projects/{project_id}/documents/{document_id}/annotations/{annotation_id}",
+      "method": "GET",
+      "path": "/api2/projects/{project_id}/documents/{document_id}/annotations/{annotation_id}",
+      "tag": "Document Annotations",
+      "params": [
+        {
+          "name": "project_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "document_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "annotation_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "bulk": false,
+      "body": null,
+      "response": "json"
+    },
+    {
+      "name": "update_document_annotation",
+      "title": "Update document annotation",
+      "description": "Replace the content for one document annotation, only the content can be changed. Annotations that match an annotation type that is Pre-Built or configured as 'blacklisted for modification' cannot be updated.\n\nPATCH /api2/projects/{project_id}/documents/{document_id}/annotations/{annotation_id}",
+      "method": "PATCH",
+      "path": "/api2/projects/{project_id}/documents/{document_id}/annotations/{annotation_id}",
+      "tag": "Document Annotations",
+      "params": [
+        {
+          "name": "project_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "document_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "annotation_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "bulk": false,
+      "body": {
+        "kind": "json",
+        "required": true,
+        "schema": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "content"
+          ],
+          "properties": {
+            "content": {
+              "type": "object",
+              "additionalProperties": true,
+              "description": "Type-specific annotation content, all values are validated against the annotation type"
+            }
+          }
+        }
+      },
+      "response": "json"
+    },
+    {
+      "name": "delete_document_annotation",
+      "title": "Delete document annotation",
+      "description": "Delete a document annotation. Annotations that match an annotation type that is Pre-Built or configured as 'blacklisted for modification' cannot be deleted.\n\nDELETE /api2/projects/{project_id}/documents/{document_id}/annotations/{annotation_id}",
+      "method": "DELETE",
+      "path": "/api2/projects/{project_id}/documents/{document_id}/annotations/{annotation_id}",
+      "tag": "Document Annotations",
+      "params": [
+        {
+          "name": "project_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "document_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "annotation_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "bulk": false,
+      "body": null,
+      "response": "json"
+    },
+    {
+      "name": "retrieve_annotation_text",
+      "title": "Retrieve annotation text",
+      "description": "Return text at each annotation position and at its content.evidence_positions. Only id and fullParagraph query parameters are accepted.\n\nGET /api2/projects/{project_id}/documents/{document_id}/annotations/annotationText",
+      "method": "GET",
+      "path": "/api2/projects/{project_id}/documents/{document_id}/annotations/annotationText",
+      "tag": "Document Annotations",
+      "params": [
+        {
+          "name": "project_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "document_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "id",
+          "in": "query",
+          "required": true,
+          "description": "Annotation IDs. Pass one id or repeat the query parameter, for example id=1&id=2. Duplicate IDs are ignored.",
+          "schema": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            }
+          }
+        },
+        {
+          "name": "fullParagraph",
+          "in": "query",
+          "required": false,
+          "description": "Set true to expand root annotation text to full paragraphs. Evidence text is not expanded.",
+          "schema": {
+            "type": "string",
+            "enum": [
+              "true",
+              "false"
+            ]
+          }
+        }
+      ],
+      "bulk": false,
+      "body": null,
+      "response": "json"
+    },
+    {
+      "name": "list_document_notes",
+      "title": "List document notes",
+      "description": "GET /api2/projects/{project_id}/documents/{document_id}/notes",
+      "method": "GET",
+      "path": "/api2/projects/{project_id}/documents/{document_id}/notes",
+      "tag": "Documents",
+      "params": [
+        {
+          "name": "project_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "document_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "bulk": false,
+      "body": null,
+      "response": "json"
+    },
+    {
+      "name": "get_document_note",
+      "title": "Get document note",
+      "description": "GET /api2/projects/{project_id}/documents/{document_id}/notes/{id}",
+      "method": "GET",
+      "path": "/api2/projects/{project_id}/documents/{document_id}/notes/{id}",
+      "tag": "Documents",
+      "params": [
+        {
+          "name": "project_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "document_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "bulk": false,
+      "body": null,
+      "response": "json"
+    },
+    {
+      "name": "list_document_templates_in_project",
+      "title": "List document templates in project",
+      "description": "Contract/document templates for the project. Use GET .../document_templates/{id}/fields to get the schema required for contract creation.\n\nGET /api2/projects/{project_id}/document_templates",
+      "method": "GET",
+      "path": "/api2/projects/{project_id}/document_templates",
+      "tag": "Document Templates",
+      "params": [
+        {
+          "name": "project_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "id",
+          "in": "query",
+          "required": false,
+          "description": "Filter by document template ID",
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "name",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "default_folder_id",
+          "in": "query",
+          "required": false,
+          "description": "Folder ID where documents created from this template are saved",
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "state",
+          "in": "query",
+          "required": false,
+          "description": "active or deleted",
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "media_type",
+          "in": "query",
+          "required": false,
+          "description": "Media type (e.g. MS Word MIME type)",
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "limit",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "integer",
+            "minimum": 1
+          }
+        },
+        {
+          "name": "offset",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "integer",
+            "minimum": 0
+          }
+        }
+      ],
+      "bulk": false,
+      "body": null,
+      "response": "json"
+    },
+    {
+      "name": "get_document_template_by_id",
+      "title": "Get document template by id",
+      "description": "GET /api2/projects/{project_id}/document_templates/{document_template_id}",
+      "method": "GET",
+      "path": "/api2/projects/{project_id}/document_templates/{document_template_id}",
+      "tag": "Document Templates",
+      "params": [
+        {
+          "name": "project_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "document_template_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "bulk": false,
+      "body": null,
+      "response": "json"
+    },
+    {
+      "name": "get_document_template_fields_for_contract_creation",
+      "title": "Get document template fields (for contract creation)",
+      "description": "GET /api2/projects/{project_id}/document_templates/{document_template_id}/fields",
+      "method": "GET",
+      "path": "/api2/projects/{project_id}/document_templates/{document_template_id}/fields",
+      "tag": "Document Templates",
+      "params": [
+        {
+          "name": "project_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "document_template_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "bulk": false,
+      "body": null,
+      "response": "json"
+    },
+    {
+      "name": "create_contract_matter_generated_document_from_template",
+      "title": "Create contract (matter + generated document from template)",
+      "description": "Get template fields from GET .../document_templates/{id}/fields; the data object keys match field keys (e.g. singleInputFieldKey for type datatag). For nested/loop fields use arrays of objects. See docuvault Contract Creation and Postman Contract Generation collection.\n\nPOST /api2/projects/{project_id}/document_templates/create",
+      "method": "POST",
+      "path": "/api2/projects/{project_id}/document_templates/create",
+      "tag": "Document Templates",
+      "params": [
+        {
+          "name": "project_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "bulk": false,
+      "body": {
+        "kind": "json",
+        "required": true,
+        "schema": {
+          "type": "object",
+          "description": "Payload for POST document_templates/create (contract creation). Get field keys from GET .../document_templates/{id}/fields; pass values in data keyed by field keys (e.g. singleInputFieldKey from fields of type datatag).",
+          "properties": {
+            "document_template_id": {
+              "type": "integer"
+            },
+            "data": {
+              "type": "object",
+              "description": "Key-value map of template field keys to values"
+            },
+            "name": {
+              "type": "string"
+            },
+            "state": {
+              "type": "string"
+            },
+            "workflow_id": {
+              "type": "integer"
+            }
+          },
+          "required": [
+            "document_template_id",
+            "data"
+          ]
+        }
+      },
+      "response": "json"
+    },
+    {
+      "name": "list_matters",
+      "title": "List matters",
+      "description": "GET /api2/projects/{project_id}/matters",
+      "method": "GET",
+      "path": "/api2/projects/{project_id}/matters",
+      "tag": "Matters",
+      "params": [
+        {
+          "name": "project_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "id",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "name",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "state",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "info",
+          "in": "query",
+          "required": false,
+          "description": "Filter by matter info (hidden in UI)",
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "limit",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "integer",
+            "minimum": 1
+          }
+        },
+        {
+          "name": "offset",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "integer",
+            "minimum": 0
+          }
+        }
+      ],
+      "bulk": false,
+      "body": null,
+      "response": "json"
+    },
+    {
+      "name": "create_matter_alternate_to_matters_create",
+      "title": "Create matter (alternate to matters/create)",
+      "description": "POST /api2/projects/{project_id}/matters",
+      "method": "POST",
+      "path": "/api2/projects/{project_id}/matters",
+      "tag": "Matters",
+      "params": [
+        {
+          "name": "project_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "bulk": false,
+      "body": {
+        "kind": "json",
+        "required": true,
+        "schema": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "state": {
+              "type": "string"
+            },
+            "info": {
+              "type": "object"
+            }
+          }
+        }
+      },
+      "response": "json"
+    },
+    {
+      "name": "update_matters_by_filter",
+      "title": "Update matters by filter",
+      "description": "PATCH /api2/projects/{project_id}/matters",
+      "method": "PATCH",
+      "path": "/api2/projects/{project_id}/matters",
+      "tag": "Matters",
+      "params": [
+        {
+          "name": "project_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "bulk": true,
+      "body": {
+        "kind": "json",
+        "required": true,
+        "schema": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "state": {
+              "type": "string"
+            },
+            "info": {
+              "type": "object"
+            }
+          }
+        }
+      },
+      "response": "json"
+    },
+    {
+      "name": "delete_matters_by_filter",
+      "title": "Delete matters by filter",
+      "description": "DELETE /api2/projects/{project_id}/matters",
+      "method": "DELETE",
+      "path": "/api2/projects/{project_id}/matters",
+      "tag": "Matters",
+      "params": [
+        {
+          "name": "project_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "bulk": true,
+      "body": null,
+      "response": "json"
+    },
+    {
+      "name": "create_matter_and_optional_annotations_and_version",
+      "title": "Create matter (and optional annotations and version)",
+      "description": "POST /api2/projects/{project_id}/matters/create",
+      "method": "POST",
+      "path": "/api2/projects/{project_id}/matters/create",
+      "tag": "Matters",
+      "params": [
+        {
+          "name": "project_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "bulk": false,
+      "body": {
+        "kind": "json",
+        "required": true,
+        "schema": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "state": {
+              "type": "string"
+            },
+            "info": {
+              "type": "object"
+            },
+            "workflow_id": {
+              "type": "integer"
+            },
+            "create_version": {
+              "type": "boolean"
+            },
+            "required_matter_annotations": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "annotation_type_id": {
+                    "type": "integer"
+                  },
+                  "content": {
+                    "type": "object"
+                  }
+                }
+              }
+            },
+            "generate_document": {
+              "type": "object",
+              "properties": {
+                "document_template_id": {
+                  "type": "integer"
+                },
+                "data": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "required": [
+            "name"
+          ]
+        }
+      },
+      "response": "json"
+    },
+    {
+      "name": "get_matter",
+      "title": "Get matter",
+      "description": "GET /api2/projects/{project_id}/matters/{matter_id}",
+      "method": "GET",
+      "path": "/api2/projects/{project_id}/matters/{matter_id}",
+      "tag": "Matters",
+      "params": [
+        {
+          "name": "project_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "matter_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "bulk": false,
+      "body": null,
+      "response": "json"
+    },
+    {
+      "name": "update_matter",
+      "title": "Update matter",
+      "description": "PATCH /api2/projects/{project_id}/matters/{matter_id}",
+      "method": "PATCH",
+      "path": "/api2/projects/{project_id}/matters/{matter_id}",
+      "tag": "Matters",
+      "params": [
+        {
+          "name": "project_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "matter_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "bulk": false,
+      "body": {
+        "kind": "json",
+        "required": true,
+        "schema": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "state": {
+              "type": "string"
+            },
+            "info": {
+              "type": "object"
+            }
+          }
+        }
+      },
+      "response": "json"
+    },
+    {
+      "name": "delete_matter",
+      "title": "Delete matter",
+      "description": "DELETE /api2/projects/{project_id}/matters/{matter_id}",
+      "method": "DELETE",
+      "path": "/api2/projects/{project_id}/matters/{matter_id}",
+      "tag": "Matters",
+      "params": [
+        {
+          "name": "project_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "matter_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "bulk": false,
+      "body": null,
+      "response": "json"
+    },
+    {
+      "name": "list_matter_annotations",
+      "title": "List matter annotations",
+      "description": "GET /api2/projects/{project_id}/matters/{matter_id}/annotations",
+      "method": "GET",
+      "path": "/api2/projects/{project_id}/matters/{matter_id}/annotations",
+      "tag": "Matters",
+      "params": [
+        {
+          "name": "project_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "matter_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "bulk": false,
+      "body": null,
+      "response": "json"
+    },
+    {
+      "name": "create_matter_annotation",
+      "title": "Create matter annotation",
+      "description": "POST /api2/projects/{project_id}/matters/{matter_id}/annotations",
+      "method": "POST",
+      "path": "/api2/projects/{project_id}/matters/{matter_id}/annotations",
+      "tag": "Matters",
+      "params": [
+        {
+          "name": "project_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "matter_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "bulk": false,
+      "body": {
+        "kind": "json",
+        "required": true,
+        "schema": {
+          "type": "object",
+          "properties": {
+            "group_id": {
+              "type": "integer"
+            },
+            "annotation_type_id": {
+              "type": "integer"
+            },
+            "content": {
+              "type": "object"
+            },
+            "state": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "response": "json"
+    },
+    {
+      "name": "update_matter_annotations_by_filter",
+      "title": "Update matter annotations by filter",
+      "description": "PATCH /api2/projects/{project_id}/matters/{matter_id}/annotations",
+      "method": "PATCH",
+      "path": "/api2/projects/{project_id}/matters/{matter_id}/annotations",
+      "tag": "Matters",
+      "params": [
+        {
+          "name": "project_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "matter_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "bulk": true,
+      "body": {
+        "kind": "json",
+        "required": true,
+        "schema": {
+          "type": "object"
+        }
+      },
+      "response": "json"
+    },
+    {
+      "name": "delete_matter_annotations_by_filter",
+      "title": "Delete matter annotations by filter",
+      "description": "DELETE /api2/projects/{project_id}/matters/{matter_id}/annotations",
+      "method": "DELETE",
+      "path": "/api2/projects/{project_id}/matters/{matter_id}/annotations",
+      "tag": "Matters",
+      "params": [
+        {
+          "name": "project_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "matter_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "bulk": true,
+      "body": null,
+      "response": "json"
+    },
+    {
+      "name": "get_matter_annotation",
+      "title": "Get matter annotation",
+      "description": "GET /api2/projects/{project_id}/matters/{matter_id}/annotations/{annotation_id}",
+      "method": "GET",
+      "path": "/api2/projects/{project_id}/matters/{matter_id}/annotations/{annotation_id}",
+      "tag": "Matters",
+      "params": [
+        {
+          "name": "project_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "matter_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "annotation_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "bulk": false,
+      "body": null,
+      "response": "json"
+    },
+    {
+      "name": "update_matter_annotation",
+      "title": "Update matter annotation",
+      "description": "PATCH /api2/projects/{project_id}/matters/{matter_id}/annotations/{annotation_id}",
+      "method": "PATCH",
+      "path": "/api2/projects/{project_id}/matters/{matter_id}/annotations/{annotation_id}",
+      "tag": "Matters",
+      "params": [
+        {
+          "name": "project_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "matter_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "annotation_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "bulk": false,
+      "body": {
+        "kind": "json",
+        "required": true,
+        "schema": {
+          "type": "object"
+        }
+      },
+      "response": "json"
+    },
+    {
+      "name": "delete_matter_annotation",
+      "title": "Delete matter annotation",
+      "description": "DELETE /api2/projects/{project_id}/matters/{matter_id}/annotations/{annotation_id}",
+      "method": "DELETE",
+      "path": "/api2/projects/{project_id}/matters/{matter_id}/annotations/{annotation_id}",
+      "tag": "Matters",
+      "params": [
+        {
+          "name": "project_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "matter_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "annotation_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "bulk": false,
+      "body": null,
+      "response": "json"
+    },
+    {
+      "name": "list_matter_relations",
+      "title": "List matter relations",
+      "description": "GET /api2/projects/{project_id}/matters/{matter_id}/relations",
+      "method": "GET",
+      "path": "/api2/projects/{project_id}/matters/{matter_id}/relations",
+      "tag": "Matters",
+      "params": [
+        {
+          "name": "project_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "matter_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "bulk": false,
+      "body": null,
+      "response": "json"
+    },
+    {
+      "name": "create_relation",
+      "title": "Create relation",
+      "description": "POST /api2/projects/{project_id}/matters/{matter_id}/relations",
+      "method": "POST",
+      "path": "/api2/projects/{project_id}/matters/{matter_id}/relations",
+      "tag": "Matters",
+      "params": [
+        {
+          "name": "project_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "matter_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "bulk": false,
+      "body": {
+        "kind": "json",
+        "required": true,
+        "schema": {
+          "type": "object",
+          "properties": {
+            "source_id": {
+              "type": "integer"
+            },
+            "target_id": {
+              "type": "integer"
+            }
+          }
+        }
+      },
+      "response": "json"
+    },
+    {
+      "name": "delete_relations_by_filter",
+      "title": "Delete relations by filter",
+      "description": "DELETE /api2/projects/{project_id}/matters/{matter_id}/relations",
+      "method": "DELETE",
+      "path": "/api2/projects/{project_id}/matters/{matter_id}/relations",
+      "tag": "Matters",
+      "params": [
+        {
+          "name": "project_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "matter_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "bulk": true,
+      "body": null,
+      "response": "json"
+    },
+    {
+      "name": "get_relation",
+      "title": "Get relation",
+      "description": "GET /api2/projects/{project_id}/matters/{matter_id}/relations/{relation_id}",
+      "method": "GET",
+      "path": "/api2/projects/{project_id}/matters/{matter_id}/relations/{relation_id}",
+      "tag": "Matters",
+      "params": [
+        {
+          "name": "project_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "matter_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "relation_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "bulk": false,
+      "body": null,
+      "response": "json"
+    },
+    {
+      "name": "delete_relation",
+      "title": "Delete relation",
+      "description": "DELETE /api2/projects/{project_id}/matters/{matter_id}/relations/{relation_id}",
+      "method": "DELETE",
+      "path": "/api2/projects/{project_id}/matters/{matter_id}/relations/{relation_id}",
+      "tag": "Matters",
+      "params": [
+        {
+          "name": "project_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "matter_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "relation_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "bulk": false,
+      "body": null,
+      "response": "json"
+    },
+    {
+      "name": "list_matter_events",
+      "title": "List matter events",
+      "description": "Only selected event types are supported.\n\nGET /api2/projects/{project_id}/matters/{matter_id}/events",
+      "method": "GET",
+      "path": "/api2/projects/{project_id}/matters/{matter_id}/events",
+      "tag": "Matters",
+      "params": [
+        {
+          "name": "project_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "matter_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "type",
+          "in": "query",
+          "required": false,
+          "description": "Filter by supported event types",
+          "schema": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            ]
+          }
+        }
+      ],
+      "bulk": false,
+      "body": null,
+      "response": "json"
+    },
+    {
+      "name": "list_matter_versions",
+      "title": "List matter versions",
+      "description": "GET /api2/projects/{project_id}/matters/{matter_id}/versions",
+      "method": "GET",
+      "path": "/api2/projects/{project_id}/matters/{matter_id}/versions",
+      "tag": "Matters",
+      "params": [
+        {
+          "name": "project_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "matter_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "bulk": false,
+      "body": null,
+      "response": "json"
+    },
+    {
+      "name": "list_assignable_users_for_version",
+      "title": "List assignable users for version",
+      "description": "GET /api2/projects/{project_id}/matters/{matter_id}/versions/{version_id}/assignable_users",
+      "method": "GET",
+      "path": "/api2/projects/{project_id}/matters/{matter_id}/versions/{version_id}/assignable_users",
+      "tag": "Matters",
+      "params": [
+        {
+          "name": "project_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "matter_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "version_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "bulk": false,
+      "body": null,
+      "response": "json"
+    },
+    {
+      "name": "assign_version_to_user",
+      "title": "Assign a version to a user",
+      "description": "PATCH /api2/projects/{project_id}/matters/{matter_id}/versions/{version_id}/assign",
+      "method": "PATCH",
+      "path": "/api2/projects/{project_id}/matters/{matter_id}/versions/{version_id}/assign",
+      "tag": "Matters",
+      "params": [
+        {
+          "name": "project_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "matter_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "version_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "bulk": false,
+      "body": {
+        "kind": "json",
+        "required": true,
+        "schema": {
+          "type": "object",
+          "properties": {
+            "user_id": {
+              "type": "integer"
+            }
+          },
+          "required": [
+            "user_id"
+          ]
+        }
+      },
+      "response": "json"
+    },
+    {
+      "name": "add_document_as_attachment_to_matter",
+      "title": "Add a document as attachment to matter",
+      "description": "POST /api2/projects/{project_id}/matters/{matter_id}/versions/add_attachment",
+      "method": "POST",
+      "path": "/api2/projects/{project_id}/matters/{matter_id}/versions/add_attachment",
+      "tag": "Matters",
+      "params": [
+        {
+          "name": "project_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "matter_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "bulk": false,
+      "body": {
+        "kind": "json",
+        "required": true,
+        "schema": {
+          "type": "object",
+          "properties": {
+            "document_id": {
+              "type": "integer"
+            }
+          },
+          "required": [
+            "document_id"
+          ]
+        }
+      },
+      "response": "json"
+    },
+    {
+      "name": "list_tasks_including_knowledge_banks",
+      "title": "List tasks (including Knowledge Banks)",
+      "description": "GET /api2/projects/{project_id}/tasks",
+      "method": "GET",
+      "path": "/api2/projects/{project_id}/tasks",
+      "tag": "Tasks",
+      "params": [
+        {
+          "name": "project_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "bulk": false,
+      "body": null,
+      "response": "json"
+    },
+    {
+      "name": "get_task",
+      "title": "Get task",
+      "description": "GET /api2/projects/{project_id}/tasks/{task_id}",
+      "method": "GET",
+      "path": "/api2/projects/{project_id}/tasks/{task_id}",
+      "tag": "Tasks",
+      "params": [
+        {
+          "name": "project_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "task_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "bulk": false,
+      "body": null,
+      "response": "json"
+    },
+    {
+      "name": "create_knowledge_bank_from_template_and_generate_positions",
+      "title": "Create Knowledge Bank from template and generate positions",
+      "description": "POST /api2/projects/{project_id}/tasks/knowledge_bank_from_template",
+      "method": "POST",
+      "path": "/api2/projects/{project_id}/tasks/knowledge_bank_from_template",
+      "tag": "Tasks",
+      "params": [
+        {
+          "name": "project_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "bulk": false,
+      "body": {
+        "kind": "json",
+        "required": true,
+        "schema": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "document_id": {
+              "type": "integer"
+            },
+            "contract_type": {
+              "type": "string"
+            },
+            "include_luminance_basis": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "name",
+            "document_id",
+            "contract_type"
+          ]
+        }
+      },
+      "response": "json"
+    },
+    {
+      "name": "list_task_reviews",
+      "title": "List task reviews",
+      "description": "GET /api2/projects/{project_id}/tasks/{task_id}/reviews",
+      "method": "GET",
+      "path": "/api2/projects/{project_id}/tasks/{task_id}/reviews",
+      "tag": "Tasks",
+      "params": [
+        {
+          "name": "project_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "task_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "bulk": false,
+      "body": null,
+      "response": "json"
+    },
+    {
+      "name": "create_task_review",
+      "title": "Create task review",
+      "description": "POST /api2/projects/{project_id}/tasks/{task_id}/reviews",
+      "method": "POST",
+      "path": "/api2/projects/{project_id}/tasks/{task_id}/reviews",
+      "tag": "Tasks",
+      "params": [
+        {
+          "name": "project_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "task_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "bulk": false,
+      "body": {
+        "kind": "json",
+        "required": true,
+        "schema": {
+          "type": "object",
+          "properties": {
+            "task_id": {
+              "type": "integer"
+            },
+            "document_id": {
+              "type": "integer"
+            }
+          },
+          "required": [
+            "task_id",
+            "document_id"
+          ]
+        }
+      },
+      "response": "json"
+    },
+    {
+      "name": "update_multiple_task_reviews_by_filter",
+      "title": "Update multiple task reviews by filter",
+      "description": "PATCH /api2/projects/{project_id}/tasks/{task_id}/reviews",
+      "method": "PATCH",
+      "path": "/api2/projects/{project_id}/tasks/{task_id}/reviews",
+      "tag": "Tasks",
+      "params": [
+        {
+          "name": "project_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "task_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "bulk": true,
+      "body": {
+        "kind": "json",
+        "required": true,
+        "schema": {
+          "type": "object"
+        }
+      },
+      "response": "json"
+    },
+    {
+      "name": "get_task_review",
+      "title": "Get task review",
+      "description": "GET /api2/projects/{project_id}/tasks/{task_id}/reviews/{review_id}",
+      "method": "GET",
+      "path": "/api2/projects/{project_id}/tasks/{task_id}/reviews/{review_id}",
+      "tag": "Tasks",
+      "params": [
+        {
+          "name": "project_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "task_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "review_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "bulk": false,
+      "body": null,
+      "response": "json"
+    },
+    {
+      "name": "update_task_review",
+      "title": "Update task review",
+      "description": "PATCH /api2/projects/{project_id}/tasks/{task_id}/reviews/{review_id}",
+      "method": "PATCH",
+      "path": "/api2/projects/{project_id}/tasks/{task_id}/reviews/{review_id}",
+      "tag": "Tasks",
+      "params": [
+        {
+          "name": "project_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "task_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "review_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "bulk": false,
+      "body": {
+        "kind": "json",
+        "required": true,
+        "schema": {
+          "type": "object"
+        }
+      },
+      "response": "json"
+    },
+    {
+      "name": "get_task_review_analysis_results",
+      "title": "Get task review analysis results",
+      "description": "GET /api2/projects/{project_id}/tasks/{task_id}/reviews/{review_id}/analysis",
+      "method": "GET",
+      "path": "/api2/projects/{project_id}/tasks/{task_id}/reviews/{review_id}/analysis",
+      "tag": "Tasks",
+      "params": [
+        {
+          "name": "project_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "task_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "review_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "bulk": false,
+      "body": null,
+      "response": "json"
+    },
+    {
+      "name": "list_documents_for_task_reviews",
+      "title": "List documents for task reviews",
+      "description": "GET /api2/projects/{project_id}/tasks/{task_id}/reviews/documents",
+      "method": "GET",
+      "path": "/api2/projects/{project_id}/tasks/{task_id}/reviews/documents",
+      "tag": "Tasks",
+      "params": [
+        {
+          "name": "project_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "task_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "bulk": false,
+      "body": null,
+      "response": "json"
+    },
+    {
+      "name": "delete_multiple_documents_in_task_reviews",
+      "title": "Delete multiple documents in task reviews",
+      "description": "DELETE /api2/projects/{project_id}/tasks/{task_id}/reviews/documents",
+      "method": "DELETE",
+      "path": "/api2/projects/{project_id}/tasks/{task_id}/reviews/documents",
+      "tag": "Tasks",
+      "params": [
+        {
+          "name": "project_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "task_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "bulk": true,
+      "body": null,
+      "response": "json"
+    },
+    {
+      "name": "get_document_in_task_review",
+      "title": "Get document in task review",
+      "description": "GET /api2/projects/{project_id}/tasks/{task_id}/reviews/documents/{document_id}",
+      "method": "GET",
+      "path": "/api2/projects/{project_id}/tasks/{task_id}/reviews/documents/{document_id}",
+      "tag": "Tasks",
+      "params": [
+        {
+          "name": "project_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "task_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "document_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "bulk": false,
+      "body": null,
+      "response": "json"
+    },
+    {
+      "name": "delete_document_in_task_review",
+      "title": "Delete document in task review",
+      "description": "DELETE /api2/projects/{project_id}/tasks/{task_id}/reviews/documents/{document_id}",
+      "method": "DELETE",
+      "path": "/api2/projects/{project_id}/tasks/{task_id}/reviews/documents/{document_id}",
+      "tag": "Tasks",
+      "params": [
+        {
+          "name": "project_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "task_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "document_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "bulk": false,
+      "body": null,
+      "response": "json"
+    },
+    {
+      "name": "download_document_file_task_review_path",
+      "title": "Download document file (task review path)",
+      "description": "GET /api2/projects/{project_id}/tasks/{task_id}/reviews/documents/{document_id}/download",
+      "method": "GET",
+      "path": "/api2/projects/{project_id}/tasks/{task_id}/reviews/documents/{document_id}/download",
+      "tag": "Tasks",
+      "params": [
+        {
+          "name": "project_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "task_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "document_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "bulk": false,
+      "body": null,
+      "response": "binary"
+    },
+    {
+      "name": "list_document_annotations_task_scoped_path",
+      "title": "List document annotations (task-scoped path)",
+      "description": "GET /api2/projects/{project_id}/tasks/{task_id}/reviews/documents/{document_id}/annotations",
+      "method": "GET",
+      "path": "/api2/projects/{project_id}/tasks/{task_id}/reviews/documents/{document_id}/annotations",
+      "tag": "Document Annotations",
+      "params": [
+        {
+          "name": "project_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "task_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "document_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "id",
+          "in": "query",
+          "required": false,
+          "description": "Annotation ID",
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "created_at",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        {
+          "name": "created_by",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "document_id",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "type",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "roles",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        {
+          "name": "content",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "state",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "string",
+            "enum": [
+              "active",
+              "deleted"
+            ]
+          }
+        },
+        {
+          "name": "pre_built",
+          "in": "query",
+          "required": false,
+          "description": "Set to true to select pre-built annotations and to false to select custom annotations; omit to include both.",
+          "schema": {
+            "type": "boolean"
+          }
+        },
+        {
+          "name": "pretty",
+          "in": "query",
+          "required": false,
+          "description": "Set true to format time-period content for display.",
+          "schema": {
+            "type": "boolean"
+          }
+        }
+      ],
+      "bulk": false,
+      "body": null,
+      "response": "json"
+    },
+    {
+      "name": "create_document_annotations_task_scoped_path",
+      "title": "Create document annotations (task-scoped path)",
+      "description": "Create document wide annotations. Only 'generic' and 'entity' annotation types are supported and 'generic' type annotations are exclusive (limited to 1 instance) per document. To create an annotation, the matching annotation type must be active and enabled for the project.\n\nPOST /api2/projects/{project_id}/tasks/{task_id}/reviews/documents/{document_id}/annotations",
+      "method": "POST",
+      "path": "/api2/projects/{project_id}/tasks/{task_id}/reviews/documents/{document_id}/annotations",
+      "tag": "Document Annotations",
+      "params": [
+        {
+          "name": "project_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "task_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "document_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "bulk": false,
+      "body": {
+        "kind": "json",
+        "required": true,
+        "schema": {
+          "oneOf": [
+            {
+              "type": "object",
+              "required": [
+                "type",
+                "content"
+              ],
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "pattern": "^(generic|entity):"
+                },
+                "roles": {
+                  "type": "array",
+                  "maxItems": 1,
+                  "items": {
+                    "type": "string"
+                  },
+                  "default": []
+                },
+                "content": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "description": "Type-specific annotation content, validated against the annotation type."
+                },
+                "state": {
+                  "type": "string",
+                  "enum": [
+                    "active",
+                    "deleted"
+                  ]
+                }
+              }
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "type",
+                  "content"
+                ],
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "pattern": "^(generic|entity):"
+                  },
+                  "roles": {
+                    "type": "array",
+                    "maxItems": 1,
+                    "items": {
+                      "type": "string"
+                    },
+                    "default": []
+                  },
+                  "content": {
+                    "type": "object",
+                    "additionalProperties": true,
+                    "description": "Type-specific annotation content, validated against the annotation type."
+                  },
+                  "state": {
+                    "type": "string",
+                    "enum": [
+                      "active",
+                      "deleted"
+                    ]
+                  }
+                }
+              }
+            }
+          ]
+        }
+      },
+      "response": "json"
+    },
+    {
+      "name": "update_document_annotations_by_filter_task_scoped_path",
+      "title": "Update document annotations by filter (task-scoped path)",
+      "description": "Replace the content field on matching annotations. At least one query parameter is required (excluding non-filtering parameters 'pretty', 'limit' and 'offset'). All matched annotations must have the same annotation type and the annotation type cannot be Pre-Built or configured as 'blacklisted for modification'. An empty match returns an empty array.\n\nPATCH /api2/projects/{project_id}/tasks/{task_id}/reviews/documents/{document_id}/annotations",
+      "method": "PATCH",
+      "path": "/api2/projects/{project_id}/tasks/{task_id}/reviews/documents/{document_id}/annotations",
+      "tag": "Document Annotations",
+      "params": [
+        {
+          "name": "project_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "task_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "document_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "id",
+          "in": "query",
+          "required": false,
+          "description": "Annotation ID",
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "created_at",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        {
+          "name": "created_by",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "document_id",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "type",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "roles",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        {
+          "name": "content",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "state",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "string",
+            "enum": [
+              "active",
+              "deleted"
+            ]
+          }
+        },
+        {
+          "name": "pre_built",
+          "in": "query",
+          "required": false,
+          "description": "If true, this will filter to annotations with a a pre-built annotation type resulting in an error (422 status code) because instances of pre-built annotation types cannot be updated. Leave as false or undefined to filter to annotations with a custom (non pre-built) annotation type which can be updated.",
+          "schema": {
+            "type": "boolean"
+          }
+        },
+        {
+          "name": "pretty",
+          "in": "query",
+          "required": false,
+          "description": "Set true to format time-period content for display.",
+          "schema": {
+            "type": "boolean"
+          }
+        }
+      ],
+      "bulk": true,
+      "body": {
+        "kind": "json",
+        "required": true,
+        "schema": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "content"
+          ],
+          "properties": {
+            "content": {
+              "type": "object",
+              "additionalProperties": true,
+              "description": "Type-specific annotation content, all values are validated against the annotation type"
+            }
+          }
+        }
+      },
+      "response": "json"
+    },
+    {
+      "name": "delete_document_annotations_by_filter_task_scoped_path",
+      "title": "Delete document annotations by filter (task-scoped path)",
+      "description": "Delete matching document annotations. At least one query parameter is required (excluding non-filtering parameters 'pretty', 'limit' and 'offset'). Annotations with an annotation type that is Pre-Built or configured as 'blacklisted for modification' can not be deleted.\n\nDELETE /api2/projects/{project_id}/tasks/{task_id}/reviews/documents/{document_id}/annotations",
+      "method": "DELETE",
+      "path": "/api2/projects/{project_id}/tasks/{task_id}/reviews/documents/{document_id}/annotations",
+      "tag": "Document Annotations",
+      "params": [
+        {
+          "name": "project_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "task_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "document_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "id",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "created_by",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "document_id",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "created_at",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        {
+          "name": "type",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "roles",
+          "in": "query",
+          "required": false,
+          "description": "Annotation role keys. Use repeated roles query parameters for an array.",
+          "schema": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        {
+          "name": "content",
+          "in": "query",
+          "required": false,
+          "description": "Annotation content filter.",
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "state",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "pre_built",
+          "in": "query",
+          "required": false,
+          "description": "If true, this will filter to annotations with a a pre-built annotation type resulting in an error (422 status code) because instances of pre-built annotation types cannot be deleted. Leave as false or undefined to filter to annotations with a custom (non pre-built) annotation type which can be deleted.",
+          "schema": {
+            "type": "boolean"
+          }
+        }
+      ],
+      "bulk": true,
+      "body": null,
+      "response": "json"
+    },
+    {
+      "name": "get_document_annotation_task_scoped_path",
+      "title": "Get document annotation (task-scoped path)",
+      "description": "GET /api2/projects/{project_id}/tasks/{task_id}/reviews/documents/{document_id}/annotations/{annotation_id}",
+      "method": "GET",
+      "path": "/api2/projects/{project_id}/tasks/{task_id}/reviews/documents/{document_id}/annotations/{annotation_id}",
+      "tag": "Document Annotations",
+      "params": [
+        {
+          "name": "project_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "task_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "document_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "annotation_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "bulk": false,
+      "body": null,
+      "response": "json"
+    },
+    {
+      "name": "update_document_annotation_task_scoped_path",
+      "title": "Update document annotation (task-scoped path)",
+      "description": "Replace the content for one document annotation, only the content can be changed. Annotations that match an annotation type that is Pre-Built or configured as 'blacklisted for modification' cannot be updated.\n\nPATCH /api2/projects/{project_id}/tasks/{task_id}/reviews/documents/{document_id}/annotations/{annotation_id}",
+      "method": "PATCH",
+      "path": "/api2/projects/{project_id}/tasks/{task_id}/reviews/documents/{document_id}/annotations/{annotation_id}",
+      "tag": "Document Annotations",
+      "params": [
+        {
+          "name": "project_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "task_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "document_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "annotation_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "bulk": false,
+      "body": {
+        "kind": "json",
+        "required": true,
+        "schema": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "content"
+          ],
+          "properties": {
+            "content": {
+              "type": "object",
+              "additionalProperties": true,
+              "description": "Type-specific annotation content, all values are validated against the annotation type"
+            }
+          }
+        }
+      },
+      "response": "json"
+    },
+    {
+      "name": "delete_document_annotation_task_scoped_path",
+      "title": "Delete document annotation (task-scoped path)",
+      "description": "Delete a document annotation. Annotations that match an annotation type that is Pre-Built or configured as 'blacklisted for modification' cannot be deleted.\n\nDELETE /api2/projects/{project_id}/tasks/{task_id}/reviews/documents/{document_id}/annotations/{annotation_id}",
+      "method": "DELETE",
+      "path": "/api2/projects/{project_id}/tasks/{task_id}/reviews/documents/{document_id}/annotations/{annotation_id}",
+      "tag": "Document Annotations",
+      "params": [
+        {
+          "name": "project_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "task_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "document_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "annotation_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "bulk": false,
+      "body": null,
+      "response": "json"
+    },
+    {
+      "name": "retrieve_annotation_text_task_review_path",
+      "title": "Retrieve annotation text (task review path)",
+      "description": "Return text at each annotation position and at its content.evidence_positions. Only id and fullParagraph query parameters are accepted.\n\nGET /api2/projects/{project_id}/tasks/{task_id}/reviews/documents/{document_id}/annotations/annotationText",
+      "method": "GET",
+      "path": "/api2/projects/{project_id}/tasks/{task_id}/reviews/documents/{document_id}/annotations/annotationText",
+      "tag": "Document Annotations",
+      "params": [
+        {
+          "name": "project_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "task_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "document_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "id",
+          "in": "query",
+          "required": true,
+          "description": "Annotation IDs. Pass one id or repeat the query parameter, for example id=1&id=2. Duplicate IDs are ignored.",
+          "schema": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            }
+          }
+        },
+        {
+          "name": "fullParagraph",
+          "in": "query",
+          "required": false,
+          "description": "Set true to expand root annotation text to full paragraphs. Evidence text is not expanded.",
+          "schema": {
+            "type": "string",
+            "enum": [
+              "true",
+              "false"
+            ]
+          }
+        }
+      ],
+      "bulk": false,
+      "body": null,
+      "response": "json"
+    },
+    {
+      "name": "list_workflows",
+      "title": "List workflows",
+      "description": "GET /api2/projects/{project_id}/workflows",
+      "method": "GET",
+      "path": "/api2/projects/{project_id}/workflows",
+      "tag": "Workflows",
+      "params": [
+        {
+          "name": "project_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "id",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "room_id",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "name",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "moniker",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "bulk": false,
+      "body": null,
+      "response": "json"
+    },
+    {
+      "name": "get_workflow",
+      "title": "Get workflow",
+      "description": "GET /api2/projects/{project_id}/workflows/{id}",
+      "method": "GET",
+      "path": "/api2/projects/{project_id}/workflows/{id}",
+      "tag": "Workflows",
+      "params": [
+        {
+          "name": "project_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "bulk": false,
+      "body": null,
+      "response": "json"
+    }
+  ]
+}

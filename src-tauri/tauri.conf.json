@@ -1,0 +1,86 @@
+{
+  "identifier": "me.proton.lumo-app",
+  "mainBinaryName": "lumo-desktop",
+  "productName": "Lumo",
+  "version": "0.5.9",
+  "build": {
+    "beforeDevCommand": "npm run build:webview",
+    "beforeBuildCommand": "npm run build:webview",
+    "frontendDist": "dist"
+  },
+  "app": {
+    "macOSPrivateApi": true,
+    "withGlobalTauri": true,
+    "security": {
+      "csp": {
+        "default-src": "'self'",
+        "script-src": "'self'",
+        "style-src": "'self'",
+        "img-src": "'self' data:",
+        "connect-src": "ipc: http://ipc.localhost",
+        "object-src": "'none'",
+        "base-uri": "'none'",
+        "form-action": "'none'",
+        "frame-ancestors": "'none'"
+      }
+    }
+  },
+  "plugins": {
+    "updater": {
+      "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IDNFQTkwRDk4ODhGMjVFMQpSV1RoSlkrSTJaRHFBMCt2VkVVVGZZei9JOThsT1RScUptLzFCaG16MzVmL1dNeU5wMStuL2Y4ego=",
+      "endpoints": ["https://lumo.protondownload.com/desktop/{{target}}/latest.json"]
+    },
+    "deep-link": {
+      "desktop": {
+        "schemes": ["proton-lumo"]
+      }
+    }
+  },
+  "bundle": {
+    "active": true,
+    "publisher": "Proton AG",
+    "icon": [
+      "icons/32x32.png",
+      "icons/128x128.png",
+      "icons/128x128@2x.png",
+      "icons/icon.ico",
+      "icons/icon.icns"
+    ],
+    "category": "Productivity",
+    "shortDescription": "Lumo: your private assistant",
+    "longDescription": "",
+    "linux": {
+      "deb": {
+        "recommends": ["gnome-keyring | kwalletd6 | kwalletd5"]
+      },
+      "rpm": {
+        "recommends": ["gnome-keyring"]
+      }
+    },
+    "macOS": {
+      "signingIdentity": "Developer ID Application: Proton AG (2SB5Z68H26)",
+      "entitlements": "./Entitlements.plist",
+      "hardenedRuntime": true
+    },
+    "windows": {
+      "nsis": {
+        "installerIcon": "icons/icon.ico",
+        "uninstallerIcon": "icons/icon.ico"
+      },
+      "signCommand": {
+        "cmd": "C:\\prowinsig\\signtool.exe",
+        "args": [
+          "sign",
+          "/fd",
+          "sha256",
+          "/a",
+          "/d",
+          "Lumo",
+          "/t",
+          "http://timestamp.digicert.com",
+          "%1"
+        ]
+      }
+    }
+  }
+}

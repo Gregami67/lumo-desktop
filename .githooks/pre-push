@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+#
+# Type-check before pushing. CI runs the same check; this only shortens the feedback loop.
+#
+# Not installed by cloning. Enable with:
+#   git config core.hooksPath .githooks
+
+set -euo pipefail
+
+repo_root=$(git rev-parse --show-toplevel)
+
+# Nothing to check before the first npm install.
+[ -x "$repo_root/node_modules/.bin/tsc" ] || exit 0
+
+npm --prefix "$repo_root" run --silent typecheck

@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Lumo bridge E2E testing stub</title>
+    <style>
+      body {
+        font: 14px/1.5 system-ui, sans-serif;
+        margin: 0;
+        padding: 16px;
+      }
+      button {
+        display: inline-block;
+        min-width: 120px;
+        min-height: 32px;
+        margin: 0 8px 8px 0;
+      }
+      pre {
+        min-height: 20px;
+        margin: 0 0 12px;
+        white-space: pre-wrap;
+        word-break: break-all;
+      }
+      #error:empty {
+        display: none;
+      }
+      #error {
+        color: #b00020;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Lumo bridge E2E testing stub</h1>
+    <p>
+      Driven by WebDriver, not by humans. Loaded only when the app runs with
+      <code>LUMO_E2E_TESTING</code>. The logic comes from
+      <code>e2e_testing_stub.js</code>, bundled from the real
+      <code>desktop-tools.ts</code> in the clients repo.
+    </p>
+
+    <h2>State</h2>
+    <dl>
+      <dt>ready</dt>
+      <dd><pre id="ready"></pre></dd>
+      <dt>tools</dt>
+      <dd><pre id="tools"></pre></dd>
+      <dt>pending</dt>
+      <dd><pre id="pending"></pre></dd>
+      <dt>pending-id</dt>
+      <dd><pre id="pending-id"></pre></dd>
+      <dt>result</dt>
+      <dd><pre id="result"></pre></dd>
+      <dt>error</dt>
+      <dd><pre id="error"></pre></dd>
+    </dl>
+
+    <h2>Actions</h2>
+    <p>
+      <input id="tool-name" type="text" size="32" placeholder="filesystem__fs_write" />
+      <input id="tool-args" type="text" size="48" placeholder='{"path":"…","content":"…"}' />
+      <button id="run" type="button">run</button>
+    </p>
+    <button id="approve" type="button">approve</button>
+    <button id="deny" type="button">deny</button>
+
+    <h2>Schedules</h2>
+    <input id="schedule-request" type="text" size="96" placeholder='{"operation":"connect","input":{}}' />
+    <button id="schedule-run" type="button">schedule action</button>
+    <pre id="schedule-result"></pre>
+    <pre id="schedule-notices"></pre>
+
+    <script src="e2e_testing_stub.js"></script>
+  </body>
+</html>

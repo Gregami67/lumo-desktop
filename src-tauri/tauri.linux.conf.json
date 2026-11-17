@@ -1,0 +1,13 @@
+{
+  "productName": "lumo",
+  "bundle": {
+    "linux": {
+      "deb": {
+        "desktopTemplate": "linux/launcher.desktop"
+      },
+      "rpm": {
+        "desktopTemplate": "linux/launcher.desktop"
+      }
+    }
+  }
+}

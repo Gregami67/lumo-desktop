@@ -1,0 +1,309 @@
+use std::sync::atomic::{AtomicBool, Ordering};
+use std::time::Duration;
+
+use semver::Version;
+use tauri::{AppHandle, Manager, Runtime, Url};
+use tauri_plugin_dialog::{DialogExt, MessageDialogKind};
+use tauri_plugin_updater::{Update, UpdaterExt};
+
+use crate::dialog::loading::Loading;
+
+const BUILD_TIME_MANIFEST_URL: Option<&str> = option_env!("LUMO_UPDATE_MANIFEST_URL");
+
+#[derive(Default)]
+pub struct UpdateState {
+    // Remains set until process exit after a mandatory update is detected.
+    required: AtomicBool,
+    // Held through the check, dialog, and installation, including mandatory-update retries.
+    busy: AtomicBool,
+}
+
+pub fn is_required<R: Runtime>(app: &AppHandle<R>) -> bool {
+    app.try_state::<UpdateState>()
+        .is_some_and(|state| state.required.load(Ordering::SeqCst))
+}
+
+// Endpoint precedence: runtime override, build-time override, then tauri.conf.json.
+fn manifest_url() -> Option<String> {
+    if let Some(url) = std::env::var("LUMO_UPDATE_MANIFEST_URL")
+        .ok()
+        .filter(|value| !value.is_empty())
+    {
+        return Some(url);
+    }
+    BUILD_TIME_MANIFEST_URL
+        .filter(|value| !value.is_empty())
+        .map(str::to_string)
+}
+
+fn mandatory(current: &Version, release: &Version, raw: &serde_json::Value) -> bool {
+    let Some(value) = raw.get("minimum_supported_version") else {
+        return false;
+    };
+    let Some(text) = value.as_str() else {
+        log::warn!("Ignoring minimum_supported_version: expected a version string");
+        return false;
+    };
+    let minimum = match Version::parse(text) {
+        Ok(version) => version,
+        Err(error) => {
+            log::warn!("Ignoring invalid minimum_supported_version: {error}");
+            return false;
+        }
+    };
+    if minimum > *release {
+        log::warn!(
+            "Ignoring minimum_supported_version {minimum}: exceeds offered release {release}"
+        );
+        return false;
+    }
+    *current < minimum
+}
+
+async fn check(app: &AppHandle) -> Result<Option<(Update, bool)>, String> {
+    let mut builder = app.updater_builder().timeout(Duration::from_secs(15));
+
+    if let Some(url) = manifest_url() {
+        let parsed: Url = url
+            .parse()
+            .map_err(|e| format!("Invalid update endpoint {url}: {e}"))?;
+        builder = builder
+            .endpoints(vec![parsed])
+            .map_err(|e| format!("Invalid update endpoint {url}: {e}"))?;
+    }
+
+    let update = builder
+        .build()
+        .map_err(|e| format!("Could not build updater: {e}"))?
+        .check()
+        .await
+        .map_err(|e| format!("Update check failed: {e}"))?;
+    update
+        .map(|update| {
+            let version = Version::parse(&update.version).map_err(|e| e.to_string())?;
+            let required = mandatory(&app.package_info().version, &version, &update.raw_json);
+            Ok((update, required))
+        })
+        .transpose()
+}
+
+async fn install(app: &AppHandle, mut update: Update) -> Result<(), String> {
+    let loading = Loading::show(
+        app,
+        "Updating Lumo",
+        "Downloading and installing the update…",
+    );
+    update.timeout = Some(Duration::from_secs(600));
+    let result = update
+        .download_and_install(|_downloaded, _total| {}, || {})
+        .await
+        .map_err(|e| format!("Update install failed: {e}"));
+    loading.finish().await;
+    result
+}
+
+fn require_update(app: &AppHandle) {
+    app.state::<UpdateState>()
+        .required
+        .store(true, Ordering::SeqCst);
+    for window in app.webview_windows().values() {
+        let _ = window.set_enabled(false);
+        let _ = window.hide();
+    }
+}
+
+// Use callback dialogs to avoid blocking the application's main thread.
+fn prompt(app: &AppHandle, update: Update, required: bool, error: Option<String>) {
+    let handle = app.clone();
+    let message = match &error {
+        Some(error) => format!("{error}\n\nLumo {} is required to continue. Retry the update or quit.", update.version),
+        None if required => format!("This version of Lumo is no longer supported. Update to Lumo {} to continue. Lumo will restart to finish installing.", update.version),
+        None => format!("Lumo {} is available. Lumo will restart to finish installing.", update.version),
+    };
+    crate::dialog::branded::show(
+        app,
+        if required {
+            "Update required"
+        } else {
+            "Update available"
+        },
+        message,
+        Some((
+            if error.is_some() { "Retry" } else { "Update" },
+            if required { "Quit" } else { "Later" },
+        )),
+        crate::dialog::branded::Layout::IconOnLeft,
+        move |accepted| {
+            if !accepted {
+                if required {
+                    handle.exit(0);
+                } else {
+                    handle
+                        .state::<UpdateState>()
+                        .busy
+                        .store(false, Ordering::SeqCst);
+                }
+                return;
+            }
+            tauri::async_runtime::spawn(async move {
+                match install(&handle, update.clone()).await {
+                    Ok(()) => handle.restart(),
+                    Err(error) if required => prompt(&handle, update, true, Some(error)),
+                    Err(error) => {
+                        handle
+                            .state::<UpdateState>()
+                            .busy
+                            .store(false, Ordering::SeqCst);
+                        show_error(&handle, error);
+                    }
+                }
+            });
+        },
+    );
+}
+
+pub async fn check_and_prompt(app: &AppHandle) {
+    if app.state::<UpdateState>().busy.swap(true, Ordering::SeqCst) {
+        return;
+    }
+    run_check(app, false).await;
+}
+
+pub fn startup(app: &AppHandle) {
+    if crate::e2e_testing_enabled() {
+        return;
+    }
+    // Acquire the update guard before spawning to prevent concurrent manual checks.
+    if app.state::<UpdateState>().busy.swap(true, Ordering::SeqCst) {
+        return;
+    }
+    let app = app.clone();
+    tauri::async_runtime::spawn(async move {
+        run_check(&app, true).await;
+    });
+}
+
+async fn run_check(app: &AppHandle, startup: bool) {
+    let state = app.state::<UpdateState>();
+    let loading = if startup {
+        None
+    } else {
+        Some(Loading::show(
+            app,
+            "Checking for updates",
+            "Looking for a newer version of Lumo…",
+        ))
+    };
+    let result = if startup {
+        tokio::time::timeout(Duration::from_secs(3), check(app))
+            .await
+            .unwrap_or_else(|_| Err("Startup update check timed out after 3 seconds".into()))
+    } else {
+        check(app).await
+    };
+    if let Some(loading) = loading {
+        loading.finish().await;
+    }
+    // Failed checks allow startup so network outages do not prevent application use.
+    if startup && !matches!(&result, Ok(Some((_, true)))) {
+        if let Err(error) = crate::main_window::show(app) {
+            log::warn!("Could not show main window after update check: {error}");
+        }
+    }
+    match result {
+        Ok(Some((update, required))) => {
+            if required {
+                require_update(app);
+            }
+            prompt(app, update, required, None);
+        }
+        Ok(None) => {
+            state.busy.store(false, Ordering::SeqCst);
+            if !startup {
+                let version = app.package_info().version.to_string();
+                crate::dialog::branded::show(
+                    app,
+                    "No updates available",
+                    format!("Lumo {version} is up to date."),
+                    None,
+                    crate::dialog::branded::Layout::IconOnLeft,
+                    |_| {},
+                );
+            }
+        }
+        Err(error) => {
+            state.busy.store(false, Ordering::SeqCst);
+            if startup {
+                log::warn!("{error}");
+            } else {
+                show_error(app, error);
+            }
+        }
+    }
+}
+
+fn show_error(app: &AppHandle, message: String) {
+    app.dialog()
+        .message(message)
+        .title("Update failed")
+        .kind(MessageDialogKind::Error)
+        .show(|_| {});
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use serde_json::json;
+
+    fn policy(current: &str, release: &str, raw: serde_json::Value) -> bool {
+        mandatory(
+            &Version::parse(current).unwrap(),
+            &Version::parse(release).unwrap(),
+            &raw,
+        )
+    }
+
+    #[test]
+    fn minimum_version_boundaries() {
+        let manifest = json!({"minimum_supported_version": "0.6.0"});
+        assert!(policy("0.5.3", "0.6.4", manifest.clone()));
+        assert!(!policy("0.6.0", "0.6.4", manifest.clone()));
+        assert!(!policy("0.6.3", "0.6.4", manifest.clone()));
+        assert!(!policy("0.6.4", "0.6.4", manifest.clone()));
+        assert!(!policy("0.7.0", "0.6.4", manifest));
+    }
+
+    #[test]
+    fn old_manifests_remain_optional() {
+        assert!(!policy("0.5.3", "0.6.4", json!({})));
+    }
+
+    #[test]
+    fn invalid_or_unreachable_minimum_keeps_update_optional() {
+        for value in [
+            json!(null),
+            json!(123),
+            json!(false),
+            json!([]),
+            json!({}),
+            json!(""),
+            json!("invalid"),
+            json!("0.7.0"),
+        ] {
+            assert!(!policy(
+                "0.5.3",
+                "0.6.4",
+                json!({"minimum_supported_version": value})
+            ));
+        }
+    }
+
+    #[test]
+    fn prerelease_is_below_stable_minimum() {
+        assert!(policy(
+            "0.6.0-beta.1",
+            "0.6.4",
+            json!({"minimum_supported_version": "0.6.0"})
+        ));
+    }
+}
