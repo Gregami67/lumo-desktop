@@ -1,0 +1,15 @@
+[Unit]
+Description=Lumo Desktop
+Documentation=https://github.com/ProtonLumo/lumo-desktop
+After=graphical-session.target
+PartOf=graphical-session.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/lumo-desktop
+Restart=on-failure
+RestartSec=5
+TimeoutStopSec=10
+
+[Install]
+WantedBy=graphical-session.target

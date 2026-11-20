@@ -23,3 +23,9 @@ src-tauri/dist/
 fastlane/report.xml
 fastlane/Preview.html
 fastlane/test_output
+
+# Arch/Artix package build output
+packaging/arch/pkg/
+packaging/arch/src/
+packaging/arch/*.pkg.tar.*
+packaging/arch/*.tar.gz

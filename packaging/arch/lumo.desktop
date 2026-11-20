@@ -1,0 +1,11 @@
+[Desktop Entry]
+Name=Lumo
+Comment=Lumo: your private assistant
+Exec=lumo-desktop %u
+Icon=lumo-desktop
+Terminal=false
+Type=Application
+Categories=Office;
+Keywords=AI;Assistant;Proton;
+StartupWMClass=lumo-desktop
+MimeType=x-scheme-handler/proton-lumo;

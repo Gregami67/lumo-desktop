@@ -1,0 +1,3 @@
+# Extra arguments passed to Lumo Desktop.
+# For example: lumo_desktop_args="--enable-features=..."
+lumo_desktop_args=""

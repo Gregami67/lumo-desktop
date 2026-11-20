@@ -32,6 +32,7 @@ computer and your tools, with your approval:
 | macOS | Universal (Apple silicon and Intel) `.dmg` |
 | Windows | `.msi` and `-setup.exe` installer |
 | Linux | `.deb` and `.rpm`, for Ubuntu 24.04+ and Fedora 40+ |
+| Arch / Artix | Source `PKGBUILD` in [`packaging/arch/`](packaging/arch/), for Arch and Artix (systemd, OpenRC and other init systems) |
 
 ## Architecture
 
@@ -132,6 +133,9 @@ emits a request to the webview, and resolves on the user's answer or a timeout.
 You also need the [Tauri prerequisites](https://tauri.app/start/prerequisites/) for your platform (WebKitGTK
 on Linux, WebView2 on Windows).
 
+On Arch and Artix, install `gtk3 webkit2gtk-4.1 libayatana-appindicator libsoup3`. The package is
+**`webkit2gtk-4.1`**: `webkit2gtk` is the older WebKitGTK 4.0 build and will fail to compile.
+
 Optionally, enable the pre-push type-check hook:
 
 ```bash
@@ -191,6 +195,24 @@ On Linux and Windows, `npm run build` is enough.
 Bundles land in `src-tauri/target/<target>/release/bundle/`. The executable is named `lumo-desktop`
 (`lumo-desktop.exe` on Windows); the app's displayed name is `Lumo`.
 
+### Arch Linux and Artix Linux
+
+The source package lives in [`packaging/arch/`](packaging/arch/):
+
+```bash
+cd packaging/arch
+makepkg -si                 # build the pinned upstream commit
+./makepkg-local.sh -si      # or build this checkout, including local changes
+```
+
+It declares `webkit2gtk-4.1` and the other Tauri dependencies, installs the launcher, hicolor icons,
+the `proton-lumo://` deep-link handler, and the license. It also ships optional user services for
+systemd (`lumo-desktop.service`) and OpenRC (Artix). The in-app **Launch at startup** setting uses XDG
+autostart and works on every init system; see [`packaging/arch/README.md`](packaging/arch/README.md)
+for enabling the init-specific services.
+
+Pacman owns updates for this install, so use `pacman`/your AUR helper rather than Lumo's built-in updater.
+
 ## Config and data storage
 
 | Platform | Config directory |
@@ -231,6 +253,9 @@ To remove a local install and its data:
 ```bash
 ./src-tauri/scripts/uninstall.sh          # --dry-run to preview, --yes to skip the prompt
 ```
+
+On Arch and Artix, remove the package with `pacman -Rns lumo-desktop`; user data stays in
+`~/.config/me.proton.lumo-app/`.
 
 ## Releasing
 

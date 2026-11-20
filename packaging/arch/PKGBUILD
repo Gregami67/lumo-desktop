@@ -1,0 +1,113 @@
+# Maintainer: Lumo Desktop contributors
+# Upstream: https://github.com/ProtonLumo/lumo-desktop
+#
+# This is the source package. It builds the pinned upstream commit so that it
+# can be published to the AUR. To build the checkout this file lives in
+# instead, run ./makepkg-local.sh (or set LUMO_PKGBUILD_LOCAL=1).
+#
+# When bumping pkgver, update _commit and regenerate .SRCINFO.
+#
+# Arch and Artix both need webkit2gtk-4.1 (WebKitGTK 4.1 / libsoup3). The
+# older webkit2gtk (4.0) package is not enough and the build will fail.
+
+pkgname=lumo-desktop
+pkgver=0.5.9
+pkgrel=1
+_commit=bd5e2c608bac61f215d4a2094e26ef88cb7bc1e0
+pkgdesc="Desktop client for Lumo, Proton's privacy-first AI assistant"
+arch=('x86_64' 'aarch64')
+url="https://github.com/ProtonLumo/lumo-desktop"
+license=('GPL-3.0-only')
+depends=(
+  'gtk3'
+  'webkit2gtk-4.1'
+  'libayatana-appindicator'
+  'libsoup3'
+  'glib2'
+  'dbus'
+  'ca-certificates'
+  'hicolor-icon-theme'
+  'xdg-utils'
+)
+makedepends=(
+  'git'
+  'nodejs'
+  'npm'
+  'rust'
+  'pkgconf'
+  'cmake'
+  'perl'
+)
+optdepends=(
+  'gnome-keyring: secret storage for connectors (recommended)'
+  'kwallet: secret storage for connectors (KDE alternative)'
+  'elogind: session and seat management on OpenRC systems'
+)
+provides=('lumo-desktop-bin')
+conflicts=('lumo-desktop-bin')
+backup=('etc/user/conf.d/lumo-desktop')
+install=lumo-desktop.install
+
+# makepkg's global "lto" option adds -flto to CFLAGS/CXXFLAGS. aws-lc-sys then
+# produces GCC LTO objects, which Rust's lld link step cannot read, and the
+# final link fails with undefined aws_lc_* symbols. The Rust release profile
+# already enables LTO, so keep makepkg from adding a second, incompatible one.
+options=('!lto')
+
+if [[ -n "${LUMO_PKGBUILD_LOCAL:-}" ]]; then
+  source=()
+  sha256sums=()
+else
+  source=("git+https://github.com/ProtonLumo/lumo-desktop.git#commit=${_commit}")
+  sha256sums=('SKIP')
+fi
+
+_srcroot() {
+  if [[ -n "${LUMO_PKGBUILD_LOCAL:-}" ]]; then
+    printf '%s\n' "${startdir}/../.."
+  else
+    printf '%s\n' "${srcdir}/lumo-desktop"
+  fi
+}
+
+build() {
+  cd "$(_srcroot)"
+  export LUMO_URL="${LUMO_URL:-https://lumo.proton.me}"
+  export CARGO_TARGET_DIR="$srcdir/target"
+
+  npm ci --no-audit --no-fund
+  npm run build -- --no-bundle
+}
+
+package() {
+  cd "$(_srcroot)"
+
+  install -Dm755 "$srcdir/target/release/lumo-desktop" \
+    "$pkgdir/usr/bin/lumo-desktop"
+  install -Dm644 "${startdir}/lumo.desktop" \
+    "$pkgdir/usr/share/applications/lumo.desktop"
+
+  # hicolor icons, matching what Tauri's deb/rpm bundles ship.
+  install -Dm644 src-tauri/icons/32x32.png \
+    "$pkgdir/usr/share/icons/hicolor/32x32/apps/lumo-desktop.png"
+  install -Dm644 src-tauri/icons/64x64.png \
+    "$pkgdir/usr/share/icons/hicolor/64x64/apps/lumo-desktop.png"
+  install -Dm644 src-tauri/icons/128x128.png \
+    "$pkgdir/usr/share/icons/hicolor/128x128/apps/lumo-desktop.png"
+  install -Dm644 src-tauri/icons/128x128@2x.png \
+    "$pkgdir/usr/share/icons/hicolor/256x256/apps/lumo-desktop.png"
+  install -Dm644 src-tauri/icons/app-icon.png \
+    "$pkgdir/usr/share/icons/hicolor/512x512/apps/lumo-desktop.png"
+
+  install -Dm644 LICENSE "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+
+  # Optional init integration. The app's own "Launch at startup" setting uses
+  # XDG autostart, which works with every init system; these units are for
+  # people who would rather have their init system supervise the app.
+  install -Dm644 "${startdir}/systemd/lumo-desktop.service" \
+    "$pkgdir/usr/lib/systemd/user/lumo-desktop.service"
+  install -Dm755 "${startdir}/openrc/lumo-desktop" \
+    "$pkgdir/etc/user/init.d/lumo-desktop"
+  install -Dm644 "${startdir}/openrc/conf.d/lumo-desktop" \
+    "$pkgdir/etc/user/conf.d/lumo-desktop"
+}

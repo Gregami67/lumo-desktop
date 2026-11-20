@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+### Added
+
+- Linux: Arch and Artix packaging, including systemd and OpenRC user services.
+
 ## [0.5.9]
 
 ### Security

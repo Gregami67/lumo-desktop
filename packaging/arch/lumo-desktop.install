@@ -1,0 +1,48 @@
+_update_caches() {
+  if command -v gtk-update-icon-cache >/dev/null 2>&1; then
+    gtk-update-icon-cache -q -t -f /usr/share/icons/hicolor 2>/dev/null || true
+  fi
+  if command -v update-desktop-database >/dev/null 2>&1; then
+    update-desktop-database -q /usr/share/applications 2>/dev/null || true
+  fi
+}
+
+_print_init_help() {
+  cat <<'EOF'
+
+Lumo Desktop is installed. It starts in the tray; use the tray icon or the
+global shortcut to open it.
+
+To start Lumo automatically at login, either enable "Launch at startup" in
+Lumo's settings (this uses XDG autostart and works on every init system), or
+use the service that matches your init system:
+
+  systemd:
+    systemctl --user daemon-reload
+    systemctl --user enable --now lumo-desktop.service
+
+  OpenRC (Artix):
+    rc-update --user add lumo-desktop default
+    rc-service --user lumo-desktop start
+
+OpenRC user services require a user OpenRC session (Artix's openrc-user PAM
+integration) and the Artix dbus-openrc package (plus elogind-openrc if you use
+elogind). If that is not set up, use the XDG autostart setting instead.
+
+Updates are handled by pacman, not Lumo's built-in updater.
+EOF
+}
+
+post_install() {
+  _update_caches
+  _print_init_help
+}
+
+post_upgrade() {
+  _update_caches
+  _print_init_help
+}
+
+post_remove() {
+  _update_caches
+}

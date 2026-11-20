@@ -1,0 +1,36 @@
+pkgbase = lumo-desktop
+	pkgdesc = Desktop client for Lumo, Proton's privacy-first AI assistant
+	pkgver = 0.5.9
+	pkgrel = 1
+	url = https://github.com/ProtonLumo/lumo-desktop
+	install = lumo-desktop.install
+	arch = x86_64
+	arch = aarch64
+	license = GPL-3.0-only
+	makedepends = git
+	makedepends = nodejs
+	makedepends = npm
+	makedepends = rust
+	makedepends = pkgconf
+	makedepends = cmake
+	makedepends = perl
+	depends = gtk3
+	depends = webkit2gtk-4.1
+	depends = libayatana-appindicator
+	depends = libsoup3
+	depends = glib2
+	depends = dbus
+	depends = ca-certificates
+	depends = hicolor-icon-theme
+	depends = xdg-utils
+	optdepends = gnome-keyring: secret storage for connectors (recommended)
+	optdepends = kwallet: secret storage for connectors (KDE alternative)
+	optdepends = elogind: session and seat management on OpenRC systems
+	provides = lumo-desktop-bin
+	conflicts = lumo-desktop-bin
+	options = !lto
+	backup = etc/user/conf.d/lumo-desktop
+	source = git+https://github.com/ProtonLumo/lumo-desktop.git#commit=bd5e2c608bac61f215d4a2094e26ef88cb7bc1e0
+	sha256sums = SKIP
+
+pkgname = lumo-desktop
